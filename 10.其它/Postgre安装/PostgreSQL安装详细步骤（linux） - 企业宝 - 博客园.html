@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)https://www.cnblogs.com/qiyebao/p/4562557.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/bundle-SimpleMemory.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/bundle-SimpleMemory-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/qiyebao/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/qiyebao/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/qiyebao/wlwmanifest.xml">
+<script async="" src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/encoder.js.下载"></script><script src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+<script type="text/javascript">var currentBlogApp = 'qiyebao', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/qiyebao/"><img id="blogLogo" src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/qiyebao/">企业宝http://www.mpnco.cn/</a></h1>
+<h2>C# ASP.NET WPF JAVA Spring Socket Javascript Linux</h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/qiyebao/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/%E4%BC%81%E4%B8%9A%E5%AE%9D">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/qiyebao/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/qiyebao/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 317&nbsp; </span>
+<span id="stats_article_count">文章 - 0&nbsp; </span>
+<span id="stats-comment_count">评论 - 16</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/qiyebao/p/4562557.html">PostgreSQL安装详细步骤（linux）</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><p>&nbsp;官方安装文档：<a href="http://www.postgresql.org/download/linux/redhat/" target="_blank">http://www.postgresql.org/download/linux/redhat/</a></p>
+<p><span style="color: #000000; font-family: verdana, geneva;">1. 检查PostgreSQL 是否已经安装</span></p>
+<h1 class="postTitle"><span style="font-size: 12px;"><a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/qiyebao/p/4343182.html">Linux-软件包管理-rpm命令管理-查询</a></span></h1>
+<div class="cnblogs_code">
+<pre>rpm -qa | grep postgres    检查PostgreSQL 是否已经安装<br>rpm -qal | grep postgres   检查PostgreSQL 安装位置</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041639125746576.png" alt=""></p>
+<p><span style="color: #000000; font-family: verdana, geneva;">若已经安装，则使用rpm -e 命令卸载。</span></p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">rpm -e postgresql94-contrib-9.4.4-1PGDG.rhel6.x86_64 postgresql94-server-9.4.4-1PGDG.rhel6.x86_64  卸载
+</span>rpm -e postgresql94-libs-9.4.4-1PGDG.rhel6.x86_64 postgresql94-9.4.4-1PGDG.rhel6.x86_64  卸载</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/090923153321559.png" alt=""></p>
+<p>可以使用rpm -qa | grep postgres再次查看是否还有Postgres安装文件，没有卸载完成。</p>
+<p>&nbsp;2.使用yum库设置安装postgresql94版本，最好先创建用户组和用户：</p>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/105584-20160407134259422-256957674.png" alt=""></p>
+<p><span style="color: #000000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">(1)<span style="font-family: 宋体;">新增<span style="font-family: Times New Roman;">postgres<span style="font-family: 宋体;">用户组：</span></span></span></span></span></span></span></p>
+<div class="cnblogs_code">
+<pre>groupadd postgres</pre>
+</div>
+<p><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">(2)<span style="font-family: 宋体;">新增<span style="font-family: Times New Roman;">postgres<span style="font-family: 宋体;">用户并且设置这个用户属于上面创建的<span style="font-family: Times New Roman;">postgres<span style="font-family: 宋体;">用户组：</span></span></span></span></span></span></span></span></span></span></p>
+<div class="cnblogs_code">
+<pre>useradd -g postgres postgres</pre>
+</div>
+<p><span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">(3)<span style="font-family: 宋体;">修改<span style="font-family: Times New Roman;">postgres<span style="font-family: 宋体;">用户密码<span style="font-family: Times New Roman;">:passwd&nbsp;postgres<span style="font-family: 宋体;">（这里设置密码为<span style="font-family: Times New Roman;">postgres<span style="font-family: 宋体;">）</span></span></span></span></span></span></span></span></span></span></span></span></span></span></p>
+<div class="cnblogs_code">
+<pre>passwd postgres &nbsp;--修改postgres用户密码</pre>
+</div>
+<div class="cnblogs_code">
+<pre>yum install http:<span style="color: #008000;">//</span><span style="color: #008000;">yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-redhat94-9.4-1.noarch.rpm &nbsp;使用yum库<br></span></pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/090925588325709.png" alt=""></p>
+<p>3.安装postgresql94</p>
+<div class="cnblogs_code">
+<pre>yum&nbsp;search&nbsp;postgresql&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">//也可以先找一下，server版会有多个，决定选择装哪个</span><br>yum -y install postgresql94-server postgresql94-contrib &nbsp; //安装postgresql94</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/090929045199404.png" alt=""></p>
+<p>&nbsp;<span style="color: #ff0000;">注意:如果出现错误,首先停止服务查看服务名称chkconfig --list找到postgresql的服务名，注意服务名可能会带有版本号，service 服务名 stop，然后使用rpm -e卸载命令，然后在执行上面的安装就可以了</span></p>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/090933520989161.png" alt=""></p>
+<p>安装成功</p>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/090934315042935.png" alt=""></p>
+<p>可以使用rpm -qal|grep postgres这个命令查看安装文件的位置，注意默认的postgresql配置文件的位置和名称（带有版本号）</p>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041647296155993.png" alt="" width="658" height="444"></p>
+<p>查看/etc/rc.d/init.d/postgresql-9.4文件中的PGDATA信息，并显示行号。</p>
+<div class="cnblogs_code">
+<pre>cat /etc/rc.d/init.d/postgresql-<span style="color: #800080;">9.4</span> | grep -n PGDATA -n显示行号</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041649241871022.png" alt="" width="1034" height="568"></p>
+<p>上图说明默认数据库文件的安装位置是在：/<span style="color: #0000ff;">var/lib/pgsql/<span style="color: #800080;">9.4/data，如果需要改变数据库文件的存放位置可以修改这里，下面会介绍如何修改默认数据库文件的存放位置。先看看这个目录里面有没有数据库的文件：</span></span></p>
+<div class="cnblogs_code">
+<pre>ls -la /<span style="color: #0000ff;">var</span>/lib/pgsql/<span style="color: #800080;">9.4</span>/data 查看这个目录里面的内容</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041656092715736.png" alt=""></p>
+<p>上图说明postgresql安装完成之后，默认数据库文件存放所使用的目录是空的。</p>
+<p><strong><span style="font-size: 18pt;">下面的内容比较重要，介绍postgresql数据库如何安装：</span></strong></p>
+<p><strong><span style="font-size: 18pt;"><strong><span style="font-size: 18pt;">一、如何更改默认数据库安装位置，安装<strong><span style="font-size: 18pt;">postgresql数据库</span></strong>：</span></strong></span></strong></p>
+<p><strong><span style="color: #000000; font-family: verdana,geneva; font-size: 14pt;"><a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/xd502djj/archive/2011/11/23/2260094.html">Linux添加/删除用户和用户组</a></span></strong></p>
+<p>1、删除postgres用户和他的文件信息（如果之前安装过）</p>
+<div class="cnblogs_code">
+<pre>userdel -r postgres</pre>
+</div>
+<p>2、删除postgres用户组（如果之前安装过）</p>
+<div class="cnblogs_code">
+<pre>groupdel postgres</pre>
+</div>
+<p><span style="color: #000000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">(1)<span style="font-family: 宋体;">新增<span style="font-family: Times New Roman;">postgres<span style="font-family: 宋体;">用户组：</span></span></span></span></span></span></span></p>
+<div class="cnblogs_code">
+<pre>groupadd postgres</pre>
+</div>
+<p><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">(2)<span style="font-family: 宋体;">新增<span style="font-family: Times New Roman;">postgres<span style="font-family: 宋体;">用户并且设置这个用户属于上面创建的<span style="font-family: Times New Roman;">postgres<span style="font-family: 宋体;">用户组：</span></span></span></span></span></span></span></span></span></span></p>
+<div class="cnblogs_code">
+<pre>useradd -g postgres postgres</pre>
+</div>
+<p><span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">(3)<span style="font-family: 宋体;">修改<span style="font-family: Times New Roman;">postgres<span style="font-family: 宋体;">用户密码<span style="font-family: Times New Roman;">:passwd&nbsp;postgres<span style="font-family: 宋体;">（这里设置密码为<span style="font-family: Times New Roman;">postgres<span style="font-family: 宋体;">）</span></span></span></span></span></span></span></span></span></span></span></span></span></span></p>
+<div class="cnblogs_code">
+<pre>passwd postgres   --修改postgres用户密码</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041755344401955.png" alt=""></p>
+<p>创建数据库文件存放的目录：/mnt/pgsql/data</p>
+<div class="cnblogs_code">
+<pre>mkdir -p /mnt/pgsql/data 递归方式创建pgsql/data目录</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041759050397684.png" alt=""></p>
+<p>默认刚建立的目录/mnt/pgsql和/mnt/pgsql/data的所有者和所有组都是root，需要修改为postgres用户和用户组。</p>
+<div class="cnblogs_code">
+<pre>chown -R postgres:postgres /mnt/<span style="color: #000000;">pgsql
+ll </span>/<span style="color: #000000;">mnt
+chown </span>-R postgres:postgres /mnt/pgsql/<span style="color: #000000;">data
+ll </span>/mnt/pgsql</pre>
+</div>
+<p>查看是否已经更改为postgres用户和用户组了。</p>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041803166165125.png" alt=""></p>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041803469174403.png" alt=""></p>
+<p>接下来就是要修改默认数据库文件存放路径了：</p>
+<p>修改postgresql数据库的配置文件（/etc/rc.d/init.d/postgresql-<span style="color: #800080;">9.4）</span>中的PGDATA和PGLOG改成我们自己创建的目录：/mnt/pgsql：</p>
+<div class="cnblogs_code">
+<pre>PGDATA=<strong><span style="font-size: 16px;">/mnt/pgsql/</span></strong><span style="color: #000000;"><strong><span style="font-size: 16px;">data</span></strong>
+PGLOG</span>=<strong><span style="font-size: 16px;">/mnt/pgsql/</span></strong>pgstartup.log</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041809413567854.png" alt=""></p>
+<p>保存之后，继续查询initdb文件的存放位置：</p>
+<div class="cnblogs_code">
+<pre>find / -name initdb 查找initdb 的安装位置</pre>
+</div>
+<p><span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041812337531183.png" alt="">&nbsp;</span></span></span></span></span></span></span></p>
+<p><strong><span style="color: #ff0000; font-size: 18px;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">指定数据库存放位置和编码方式，初始化数据库：</span></span></span></span></span></span></span></strong></p>
+<div class="cnblogs_code">
+<pre>/usr/pgsql-<span style="color: #800080;">9.4</span>/bin/initdb -E UNICODE -D /mnt/pgsql/data</pre>
+</div>
+<p>&nbsp;<img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041816248612911.png" alt=""></p>
+<p>&nbsp;注意：<span style="color: #ff0000;">&nbsp;<span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">出现上面的错误说明</span></span></span></span></span></span></span>Postgresql<span style="font-family: 宋体;">不能以<span style="font-family: Times New Roman;">root<span style="font-family: 宋体;">身份初始化，要以<span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">postgres</span></span></span></span></span></span></span>用户的身份运行，所以上面要创建linux用户<span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">postgres</span></span></span></span></span></span></span>和组<span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">postgres</span></span></span></span></span></span></span></span></span></span></span>。</span></span></span></span></p>
+<p><span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">切换<span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">postgres</span></span></span></span></span></span></span></span></span></span></span>用户执行初始化数据库操作</span></span></span></span></p>
+<div class="cnblogs_code">
+<pre>su - <span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">postgres &nbsp;切换用户<br></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>/usr/pgsql-<span style="color: #800080;">9.4/bin/initdb -E UNICODE -D /mnt/pgsql/data</span> --初始化数据库<br>cd /mnt/pgsql/data 切换目录<br>ll 查询初始化数据库成功之后的目录内容</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041820324566270.png" alt=""></p>
+<p><span style="font-size: 10pt;"><strong>编辑postgresql.conf文件，<span style="font-size: 10pt;"><strong>修改</strong></span>数据库默认接收的监听地址与端口参数：</strong></span></p>
+<div class="cnblogs_code">
+<pre>cat postgresql.conf | grep -n listen_addresses &nbsp;查找listen_addresses在postgresql.conf文件中的位置并显示行号<br>vi postgresql.conf 编辑postgresql.conf文件</pre>
+</div>
+<p>查询listen_addresses的值：</p>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041828061363904.png" alt=""></p>
+<p>修改前listen_addresses的值：</p>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091021503018202.png" alt=""></p>
+<p>去掉59行的注释，将listen_addresses&nbsp;=&nbsp;<span class="string">'localhost' 改成 listen_addresses&nbsp;=&nbsp;<span class="string">'*'，下图是修改后listen_addresses的值：</span></span></p>
+<p><span class="string"><span class="string"><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091023489109403.png" alt=""></span></span></p>
+<p><strong><span class="string">接下来继续修改pg_hba.conf文件，告诉数据库服务器它将允许什么样的客户端连接到自己：</span></strong></p>
+<div class="cnblogs_code">
+<pre>vi pg_hba.conf --修改postgresql服务连接文件</pre>
+</div>
+<p>修改前的源文件：</p>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041837327234340.png" alt=""></p>
+<p>在86行下面增加一行，表示允许任何一个客户端使用正确的用户名和密码访问自己：</p>
+<div class="cnblogs_code">
+<pre>host    all             all             <span style="color: #800080;">0.0</span>.<span style="color: #800080;">0.0</span>/<span style="color: #800080;">0</span>               trust</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041840598595956.png" alt=""></p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre><span style="color: #000000;"># TYPE  DATABASE        USER            ADDRESS                 METHOD
+
+# </span><span style="color: #800000;">"</span><span style="color: #800000;">local</span><span style="color: #800000;">"</span> <span style="color: #0000ff;">is</span> <span style="color: #0000ff;">for</span><span style="color: #000000;"> Unix domain socket connections only
+local   all             all                                     <span style="color: #000000;">trust或</span>peer
+# IPv4 local connections:
+host    all             all             </span><span style="color: #800080;">127.0</span>.<span style="color: #800080;">0.1</span>/<span style="color: #800080;">32</span><span style="color: #000000;">            trust
+host    all             all             </span><span style="color: #800080;">0.0</span>.<span style="color: #800080;">0.0</span>/<span style="color: #800080;">0</span><span style="color: #000000;">               password
+# IPv6 local connections:
+host    all             all             ::</span><span style="color: #800080;">1</span>/<span style="color: #800080;">128</span><span style="color: #000000;">                 password
+# Allow replication connections </span><span style="color: #0000ff;">from</span><span style="color: #000000;"> localhost, by a user with the
+# replication privilege.
+#local   replication     postgres                                peer
+#host    replication     postgres        </span><span style="color: #800080;">127.0</span>.<span style="color: #800080;">0.1</span>/<span style="color: #800080;">32</span><span style="color: #000000;">            ident
+#host    replication     postgres        ::</span><span style="color: #800080;">1</span>/<span style="color: #800080;">128</span>                 ident</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p><span style="font-size: 14pt;"><strong>备注：</strong></span>设置 <strong>trust</strong>，本地可以使用psql -U postgres直接登录服务器；设置 <strong>peer</strong>，本地可以使用psql -h 127.0.0.1 -d postgres -U postgres直接登录服务器；</p>
+<div class="cnblogs_code">
+<pre>exit --返回root用户</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041823466433812.png" alt=""></p>
+<div class="cnblogs_code">
+<pre>chkconfig --list 查看所有服务并找到postgre的服务名称</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041842377726813.png" alt="" width="579" height="523"></p>
+<p>默认postgresql-9.4不是自启动的，我们需要设置postgresql-9.4服务为自启动服务：</p>
+<div class="cnblogs_code">
+<pre>chkconfig postgresql-<span style="color: #800080;">9.4</span> on &nbsp;设置服务自启动<br>chkconfig --list</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041844175829652.png" alt=""></p>
+<div class="cnblogs_code">
+<pre>service postgresql-<span style="color: #800080;">9.4</span><span style="color: #000000;"> status 查看服务状态
+service postgresql</span>-<span style="color: #800080;">9.4</span> start 启动postgresql-<span style="color: #800080;">9</span>.4服务</pre>
+</div>
+<p>&nbsp;<img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041845351142066.png" alt=""></p>
+<p><span style="color: #ff0000;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;"><span style="font-family: 宋体;"><span style="font-family: Times New Roman;"><span style="font-family: 宋体;">有三种方式可以查看postgresql运行是否运行</span></span></span></span></span></span></span></p>
+<div class="cnblogs_code">
+<pre>ps -ef |<span style="color: #000000;"> grep postgres  查postgres的进程信息
+netstat -tpnl | grep <span style="color: #800080;">5432   查postgres的端口号5432是否已经打开<br>service postgresql-9.4 status 查看服务状态</span></span></pre>
+</div>
+<p>&nbsp; <img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041848041125412.png" alt=""></p>
+<p>&nbsp;开始连接postgresql数据库:</p>
+<div class="cnblogs_code">
+<pre>psql -U postgres <span style="color: #008000;">//</span><span style="color: #008000;">连接pgsql server<br><span style="color: #000000;">psql -h 127.0.0.1 -d postgres -U postgres</span> <span style="color: #008000;">//<span style="color: #008000;">连接pgsql server</span></span></span></pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041849539044475.png" alt=""></p>
+<p>看到上图表示连接数据库成功了。</p>
+<p>修改配置文件<code>pg_hba.conf</code>之后，登录数据库重新刷新更新后的配置命令：</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">select</span> pg_reload_conf();</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/105584-20151112103931025-950204978.png" alt=""></p>
+<div class="cnblogs_code">
+<pre>show data_directory;</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041947326698001.png" alt=""></p>
+<p>为数据库默认的登陆名postgres（等同于SQLServer里面的sa）设置登陆数据库的密码：</p>
+<div class="cnblogs_code">
+<pre>ALTER USER postgres WITH PASSWORD <span style="color: #800000;">'</span><span style="color: #800000;">1234</span><span style="color: #800000;">'</span>; <span style="color: #008000;">//</span><span style="color: #008000;">添加密码</span>
+<span style="color: #0000ff;">select</span> * <span style="color: #0000ff;">from</span> pg_shadow;<br>\q回车 退出登录</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041854266014029.png" alt=""></p>
+<p><span style="font-size: 15px;">设置防火墙</span></p>
+<div class="cnblogs_code">
+<pre>iptables -I INPUT -p tcp --dport <span style="color: #800080;">22</span> -<span style="color: #000000;">j ACCEPT
+iptables </span>-I INPUT -p tcp --dport <span style="color: #800080;">5432</span> -<span style="color: #000000;">j ACCEPT
+service iptables save
+service iptables restart <br>cat /etc/sysconfig/iptables</span></pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/041930496874447.png" alt=""></p>
+<p><strong><span style="font-size: 18pt;">二、采用默认的方式安装<strong><span style="font-size: 18pt;">postgresql数据库</span></strong>文件：</span></strong></p>
+<p><span style="font-size: 18px;"><strong><strong>直接执行下面的命令，都不需要创建linux用户：</strong></strong></span></p>
+<div class="cnblogs_code">
+<pre>service postgresql-<span style="color: #800080;">9.4</span> initdb</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/090944121911937.png" alt=""></p>
+<p>如果启动过程中报错了，例如：Data directory is not empty![失败]，估计是卸载出了问题，删除/<span class="keyword">var/lib/pgsql</span>目录下面所有文件，<span style="color: #000000; font-family: verdana, geneva;">使用rpm -e 命令卸载</span>重新安装.</p>
+<div class="cnblogs_code">
+<pre>cd /<span style="color: #0000ff;">var</span>/lib/pgsql/<span style="color: #000000;">data
+cd </span>/<span style="color: #0000ff;">var</span>/lib/<span style="color: #000000;">pgsql
+cd </span>/<span style="color: #0000ff;">var</span>/<span style="color: #000000;">lib
+rm </span>-rf /<span style="color: #0000ff;">var</span>/lib/<span style="color: #000000;">pgsql
+ll </span>/<span style="color: #0000ff;">var</span>/lib</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/090954186139101.png" alt=""></p>
+<div class="cnblogs_code">
+<pre>rpm -e postgresql94-contrib-<span style="color: #800080;">9.4</span>.<span style="color: #800080;">3</span>-1PGDG.rhel6.x86_64 postgresql94-server-<span style="color: #800080;">9.4</span>.<span style="color: #800080;">3</span>-1PGDG.rhel6.x86_64 postgresql94-<span style="color: #800080;">9.4</span>.<span style="color: #800080;">3</span>-1PGDG.rhel6.x86_64 postgresql94-libs-<span style="color: #800080;">9.4</span>.<span style="color: #800080;">3</span>-<span style="color: #000000;">1PGDG.rhel6.x86_64  卸载
+yum </span>-y install postgresql94-server postgresql94-contrib  安装<br>service postgresql-<span style="color: #800080;">9.4 initdb &nbsp;初始化数据库<br></span></pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/090959472541405.png" alt=""></p>
+<p>设置开机启动postgresql</p>
+<div class="cnblogs_code">
+<pre>chkconfig postgresql-<span style="color: #800080;">9.4</span> on </pre>
+</div>
+<p>&nbsp;<img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091000279734677.png" alt=""></p>
+<p>查看postgresql运行是否运行</p>
+<div class="cnblogs_code">
+<pre>ps -ef |<span style="color: #000000;"> grep postgres  查postgres的进程信息
+netstat </span>-tpnl |grep <span style="color: #800080;">5432</span>   查postgres的端口号5432是否已经打开<br>service postgresql-9.4 status 查看服务状态</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091002146761543.png" alt=""></p>
+<p><strong>用postgres用户登录，并改密码</strong></p>
+<div class="cnblogs_code">
+<pre>su postgres  <span style="color: #008000;">//</span><span style="color: #008000;">切换用户</span></pre>
+</div>
+<p>如果出现下面的错误,需要重新运行postgresql的服务,若想psql能直接登陆，再重启一下DB，socket文件会随着服务器的启动而生成。</p>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091011117387784.png" alt=""></p>
+<div class="cnblogs_code">
+<pre>ps -ef | grep postgre 查postgre进程</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091013473795301.png" alt=""></p>
+<div class="cnblogs_code">
+<pre>kill -<span style="color: #800080;">9</span> <span style="color: #800080;">31308</span><span style="color: #000000;">
+service postgresql</span>-<span style="color: #800080;">9.4</span><span style="color: #000000;"> status
+service postgresql</span>-<span style="color: #800080;">9.4</span><span style="color: #000000;"> stop
+service postgresql</span>-<span style="color: #800080;">9.4</span> start</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091014559414879.png" alt=""></p>
+<div class="cnblogs_code">
+<pre>su postgres  <span style="color: #008000;">//</span><span style="color: #008000;">切换用户</span>
+psql -U postgres    <span style="color: #008000;">//</span><span style="color: #008000;">连接pgsql server  </span></pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091016402698585.png" alt=""></p>
+<div class="cnblogs_code">
+<pre>ALTER USER postgres WITH PASSWORD <span style="color: #800000;">'</span><span style="color: #800000;">1234</span><span style="color: #800000;">'</span>; <span style="color: #008000;">//</span><span style="color: #008000;">添加密码</span>
+<span style="color: #0000ff;">select</span> * <span style="color: #0000ff;">from</span> pg_shadow;</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091018315518483.png" alt=""></p>
+<div class="cnblogs_code">
+<pre>\q 退出</pre>
+</div>
+<p>如果出现下面这个错误</p>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091038001765938.png" alt=""></p>
+<p>需要继续创建文件</p>
+<div class="cnblogs_code">
+<pre>touch /home/postgres/.psql_history 创建这个文件</pre>
+</div>
+<div class="cnblogs_code">
+<pre>chmod -R g+w  /home/<span style="color: #000000;">postgres  提升postgres这个目录的权限
+chmod a</span>+w /home/postgres/.psql_history 提升.psql_history这个文件的权限</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091039537545737.png" alt=""></p>
+<p><strong>修改/var/lib/pgsql/9.4/data/postgresql.conf(这个文件是默认的安装位置)</strong></p>
+<div class="cnblogs_code">
+<pre>vi /<span style="color: #0000ff;">var</span>/lib/pgsql/<span style="color: #800080;">9.4</span>/data/postgresql.conf 修改postgresql的配置文件</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091021503018202.png" alt=""></p>
+<p>去掉59行的注释，将listen_addresses&nbsp;=&nbsp;<span class="string">'localhost' 改成 listen_addresses&nbsp;=&nbsp;<span class="string">'*'</span></span></p>
+<p><span class="string"><span class="string"><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091023489109403.png" alt=""></span></span></p>
+<p><strong>修改/var/lib/pgsql/9.4/data/pg_hba.conf(这个文件是默认的安装位置)</strong></p>
+<div class="cnblogs_code">
+<pre>vi /var/lib/pgsql/9.4/data/pg_hba.conf 修改postgresql服务连接文件</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091026399885103.png" alt=""></p>
+<p>第80行：peer改称md5，本地就可以连接自己了。</p>
+<p>在82行下面增加一行</p>
+<div class="cnblogs_code">
+<pre>host    all             all             <span style="color: #800080;">192.168</span>.<span style="color: #800080;">6.0</span>/<span style="color: #800080;">24</span>          md5 &nbsp;允许192.168.0.0网段连接<br>host 　 &nbsp;all　　　　　　 &nbsp; all 　　　　　　 <span style="color: #800080;">0.0.0.0/0　　　　　　　　<span style="color: #800080;"><span style="color: #800080;"> md5 &nbsp;允许所有IP连接</span></span></span></pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091027415357705.png" alt=""></p>
+<p>关闭防火墙</p>
+<div class="cnblogs_code">
+<pre>service iptables stop</pre>
+</div>
+<p>重启postgresql的服务</p>
+<div class="cnblogs_code">
+<pre>service postgresql-<span style="color: #800080;">9.4</span> restart</pre>
+</div>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091029471298043.png" alt=""></p>
+<p>&nbsp;</p>
+<p><strong><span style="font-size: 18pt;">三、使用客户端工具就可以连接成功了！</span></strong></p>
+<p>Navicat for PostgreSQL</p>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091031058328385.png" alt=""></p>
+<p>pgAdmin III</p>
+<p><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/091031151914979.png" alt=""></p>
+<p>&nbsp;转自：<a href="http://www.postgresql.org/download/linux/redhat/" target="_blank">http://www.postgresql.org/download/linux/redhat/</a></p>
+<p><a href="http://www.cnblogs.com/mchina/archive/2012/06/06/2539003.html" target="_blank">http://www.cnblogs.com/mchina/archive/2012/06/06/2539003.html</a></p>
+<p><a href="http://blog.51yip.com/pgsql/1520.html" target="_blank">http://blog.51yip.com/pgsql/1520.html</a></p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/qiyebao/category/631053.html" target="_blank">linux</a>,<a href="http://www.cnblogs.com/qiyebao/category/685774.html" target="_blank">PostgreSQL</a></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/qiyebao/tag/%E5%AE%89%E8%A3%85/">安装</a>, <a href="http://www.cnblogs.com/qiyebao/tag/linux/">linux</a>, <a href="http://www.cnblogs.com/qiyebao/tag/PostgreSQL/">PostgreSQL</a></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(4562557,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;aac2e6a8-50f0-de11-ba8f-001cf0cd104b&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/qiyebao/" target="_blank"><img src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/sample_face.gif" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/qiyebao/">企业宝</a><br>
+            <a href="http://home.cnblogs.com/u/qiyebao/followees">关注 - 146</a><br>
+            <a href="http://home.cnblogs.com/u/qiyebao/followers">粉丝 - 51</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;aac2e6a8-50f0-de11-ba8f-001cf0cd104b&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(4562557,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">1</span>
+    </div>
+    <div class="buryit" onclick="votePost(4562557,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/qiyebao/p/4554049.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/qiyebao/p/4554049.html" title="发布于2015-06-05 10:44">PostgreSQL安装详细步骤（windows）[转]</a><br><a href="http://www.cnblogs.com/qiyebao/p/4566418.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/qiyebao/p/4566418.html" title="发布于2015-06-10 16:24">MongoDB基本管理命令 [转]</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2015-06-09 09:24</span> <a href="http://www.cnblogs.com/qiyebao/">企业宝</a> 阅读(<span id="post_view_count">21464</span>) 评论(<span id="post_comment_count">0</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=4562557" rel="nofollow">编辑</a> <a href="https://www.cnblogs.com/qiyebao/p/4562557.html#" onclick="AddToWz(4562557);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=102421,cb_entryId=4562557,cb_blogApp=currentBlogApp,cb_blogUserGuid='aac2e6a8-50f0-de11-ba8f-001cf0cd104b',cb_entryCreatedDate='2015/6/9 9:24:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/qiyebao/p/4562557.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/qiyebao/p/4562557.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】超50万VC++源码: 大型工控、组态\仿真、建模CAD源码2018！</a><br><a href="https://www.cnblogs.com/cmt/p/8505033.html" target="_blank">【活动】世界各地的青年团体，将在 2050 握手团聚</a><br><a href="https://dnspod.cloud.tencent.com/act/yearendsales?from=IT&amp;fromSource=gwzcw.781137.781137.781137" target="_blank">【抢购】新注册用户域名抢购1元起</a><br></div>
+<div id="opt_under_post"></div>
+<div id="cnblogs_c1" class="c_ad_block"><a href="https://dnspod.cloud.tencent.com/act/weapp?fromSource=gwzcw.781158.781158.781158" target="_blank"><img width="300" height="250" src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/24442-20180228164005211-881957482.jpg" alt="tencent0228"></a></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="https://news.cnblogs.com/n/591159/" target="_blank">腾讯成长守护平台新功能上线：数字契约</a><br> ·  <a href="https://news.cnblogs.com/n/591158/" target="_blank">消息称滴滴外卖将上线无锡、南京等七城 官方不予置评</a><br> ·  <a href="https://news.cnblogs.com/n/591156/" target="_blank">三星收购AI搜索引擎公司Kngine 提升Bixby性能</a><br> ·  <a href="https://news.cnblogs.com/n/591157/" target="_blank">联发科总裁陈冠州：公司短期目标是让业绩重回增长轨道</a><br> ·  <a href="https://news.cnblogs.com/n/591117/" target="_blank">在城市精英们追捧区块链的时候，乡亲们已经被套路了</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="cnblogs_c2" class="c_ad_block"><a href="http://click.aliyun.com/m/34770/" target="_blank"><img width="468" height="60" src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/24442-20171208101900738-116140477.jpg" alt="阿里云C2-1208"></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/575255/" target="_blank">写给自学者的入门指南</a><br> ·  <a href="http://kb.cnblogs.com/page/578690/" target="_blank">和程序员谈恋爱</a><br> ·  <a href="http://kb.cnblogs.com/page/585734/" target="_blank">学会学习</a><br> ·  <a href="http://kb.cnblogs.com/page/588938/" target="_blank">优秀技术人的管理陷阱</a><br> ·  <a href="http://kb.cnblogs.com/page/590141/" target="_blank">作为一个程序员，数学对你到底有多重要</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><a target="_blank" href="http://wpa.qq.com/msgrd?v=3&amp;uin=315360007"><img border="0" align="absmiddle" src="./PostgreSQL安装详细步骤（linux） - 企业宝 - 博客园_files/pa" alt="QQ交谈" title="QQ交谈"></a><div id="profile_block">昵称：<a href="https://home.cnblogs.com/u/qiyebao/">企业宝</a><br>园龄：<a href="https://home.cnblogs.com/u/qiyebao/" title="入园时间：2009-12-24">8年2个月</a><br>粉丝：<a href="https://home.cnblogs.com/u/qiyebao/followers/">51</a><br>关注：<a href="https://home.cnblogs.com/u/qiyebao/followees/">146</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;aac2e6a8-50f0-de11-ba8f-001cf0cd104b&#39;)">+加关注</a></div><script>getFollowStatus('aac2e6a8-50f0-de11-ba8f-001cf0cd104b')</script></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/02/01&#39;);return false;">&lt;</a></td><td align="center">2018年3月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/04/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">25</td><td class="CalOtherMonthDay" align="center">26</td><td class="CalOtherMonthDay" align="center">27</td><td class="CalOtherMonthDay" align="center">28</td><td align="center">1</td><td align="center">2</td><td class="CalWeekendDay" align="center">3</td></tr><tr><td class="CalWeekendDay" align="center">4</td><td align="center">5</td><td align="center">6</td><td class="CalTodayDay" align="center">7</td><td align="center">8</td><td align="center">9</td><td class="CalWeekendDay" align="center">10</td></tr><tr><td class="CalWeekendDay" align="center">11</td><td align="center">12</td><td align="center">13</td><td align="center">14</td><td align="center">15</td><td align="center">16</td><td class="CalWeekendDay" align="center">17</td></tr><tr><td class="CalWeekendDay" align="center">18</td><td align="center">19</td><td align="center">20</td><td align="center">21</td><td align="center">22</td><td align="center">23</td><td class="CalWeekendDay" align="center">24</td></tr><tr><td class="CalWeekendDay" align="center">25</td><td align="center">26</td><td align="center">27</td><td align="center">28</td><td align="center">29</td><td align="center">30</td><td class="CalWeekendDay" align="center">31</td></tr><tr><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/qiyebao/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/qiyebao/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/qiyebao/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/qiyebao/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/qiyebao/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div></div><div id="sidebar_toptags" class="sidebar-block">
+<div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/qiyebao/tag/linux/">linux</a>(137)</li><li><a href="http://www.cnblogs.com/qiyebao/tag/%E5%91%BD%E4%BB%A4/">命令</a>(73)</li><li><a href="http://www.cnblogs.com/qiyebao/tag/Java/">Java</a>(31)</li><li><a href="http://www.cnblogs.com/qiyebao/tag/windows/">windows</a>(26)</li><li><a href="http://www.cnblogs.com/qiyebao/tag/%E5%AE%89%E8%A3%85/">安装</a>(17)</li><li><a href="http://www.cnblogs.com/qiyebao/tag/mysql/">mysql</a>(13)</li><li><a href="http://www.cnblogs.com/qiyebao/tag/rabbitmq/">rabbitmq</a>(13)</li><li><a href="http://www.cnblogs.com/qiyebao/tag/maven/">maven</a>(12)</li><li><a href="http://www.cnblogs.com/qiyebao/tag/sts/">sts</a>(11)</li><li><a href="http://www.cnblogs.com/qiyebao/tag/PostgreSQL/">PostgreSQL</a>(10)</li><li><a href="http://www.cnblogs.com/qiyebao/tag/">更多</a></li>
+</ul>
+</div></div><div id="sidebar_categories">
+<div id="sidebar_postcategory" class="catListPostCategory sidebar-block">
+<h3 class="catListTitle">随笔分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/qiyebao/category/778776.html">ASP.NET Core(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/qiyebao/category/778777.html">ASP.NET MVC 6(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/qiyebao/category/812248.html">blog(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/qiyebao/category/526566.html">C++(5)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/qiyebao/category/796439.html">ElasticSearch(7)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/qiyebao/category/800360.html">git(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/qiyebao/category/826812.html">hadoop</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/qiyebao/category/872519.html">haproxy(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/qiyebao/category/826813.html">hive</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/qiyebao/category/676442.html">iis(7)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/qiyebao/category/930872.html">Intellij IDEA(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/qiyebao/category/526562.html">java(48)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_12" href="http://www.cnblogs.com/qiyebao/category/620872.html">javascript(7)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_13" href="http://www.cnblogs.com/qiyebao/category/549195.html">jquery(7)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_14" href="http://www.cnblogs.com/qiyebao/category/700829.html">json</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_15" href="http://www.cnblogs.com/qiyebao/category/673365.html">jsp(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_16" href="http://www.cnblogs.com/qiyebao/category/873073.html">keepalived(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_17" href="http://www.cnblogs.com/qiyebao/category/631053.html">linux(143)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_18" href="http://www.cnblogs.com/qiyebao/category/597666.html">lucene.net(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_19" href="http://www.cnblogs.com/qiyebao/category/673363.html">maven(14)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_20" href="http://www.cnblogs.com/qiyebao/category/600710.html">mongodb(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_21" href="http://www.cnblogs.com/qiyebao/category/811603.html">mono(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_22" href="http://www.cnblogs.com/qiyebao/category/792765.html">MyBatis(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_23" href="http://www.cnblogs.com/qiyebao/category/600712.html">mysql(13)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_24" href="http://www.cnblogs.com/qiyebao/category/526563.html">net(20)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_25" href="http://www.cnblogs.com/qiyebao/category/962094.html">nginx(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_26" href="http://www.cnblogs.com/qiyebao/category/643807.html">nuget(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_27" href="http://www.cnblogs.com/qiyebao/category/840627.html">OWIN(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_28" href="http://www.cnblogs.com/qiyebao/category/685774.html">PostgreSQL(10)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_29" href="http://www.cnblogs.com/qiyebao/category/736112.html">python(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_30" href="http://www.cnblogs.com/qiyebao/category/646413.html">rabbitmq(13)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_31" href="http://www.cnblogs.com/qiyebao/category/600709.html">redis(7)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_32" href="http://www.cnblogs.com/qiyebao/category/526568.html">regular expression (4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_33" href="http://www.cnblogs.com/qiyebao/category/526565.html">socket(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_34" href="http://www.cnblogs.com/qiyebao/category/600708.html">solr(5)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_35" href="http://www.cnblogs.com/qiyebao/category/826814.html">spark</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_36" href="http://www.cnblogs.com/qiyebao/category/716230.html">SQL Server(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_37" href="http://www.cnblogs.com/qiyebao/category/826815.html">strom</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_38" href="http://www.cnblogs.com/qiyebao/category/673362.html">STS(13)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_39" href="http://www.cnblogs.com/qiyebao/category/803853.html">svn(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_40" href="http://www.cnblogs.com/qiyebao/category/663326.html">TFS(4)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_41" href="http://www.cnblogs.com/qiyebao/category/697129.html">tomcat(6)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_42" href="http://www.cnblogs.com/qiyebao/category/1069216.html">ubuntu(8)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_43" href="http://www.cnblogs.com/qiyebao/category/804121.html">Velocity\NVelocity(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_44" href="http://www.cnblogs.com/qiyebao/category/817396.html">VS(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_45" href="http://www.cnblogs.com/qiyebao/category/840628.html">WebAPI(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_46" href="http://www.cnblogs.com/qiyebao/category/622286.html">WinDBG(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_47" href="http://www.cnblogs.com/qiyebao/category/526571.html">windows(18)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_48" href="http://www.cnblogs.com/qiyebao/category/526570.html">Winform(2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_49" href="http://www.cnblogs.com/qiyebao/category/526564.html">wpf(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_50" href="http://www.cnblogs.com/qiyebao/category/700828.html">xml(3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_51" href="http://www.cnblogs.com/qiyebao/category/826811.html">zookeeper(1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_52" href="http://www.cnblogs.com/qiyebao/category/600715.html">快捷键(3)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_1_Link_0" href="http://www.cnblogs.com/qiyebao/archive/2017/09.html">2017年9月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_1" href="http://www.cnblogs.com/qiyebao/archive/2017/08.html">2017年8月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_2" href="http://www.cnblogs.com/qiyebao/archive/2017/07.html">2017年7月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_3" href="http://www.cnblogs.com/qiyebao/archive/2017/06.html">2017年6月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_4" href="http://www.cnblogs.com/qiyebao/archive/2017/05.html">2017年5月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_5" href="http://www.cnblogs.com/qiyebao/archive/2017/04.html">2017年4月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_6" href="http://www.cnblogs.com/qiyebao/archive/2017/02.html">2017年2月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_7" href="http://www.cnblogs.com/qiyebao/archive/2016/12.html">2016年12月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_8" href="http://www.cnblogs.com/qiyebao/archive/2016/10.html">2016年10月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_9" href="http://www.cnblogs.com/qiyebao/archive/2016/08.html">2016年8月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_10" href="http://www.cnblogs.com/qiyebao/archive/2016/07.html">2016年7月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_11" href="http://www.cnblogs.com/qiyebao/archive/2016/06.html">2016年6月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_12" href="http://www.cnblogs.com/qiyebao/archive/2016/05.html">2016年5月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_13" href="http://www.cnblogs.com/qiyebao/archive/2016/04.html">2016年4月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_14" href="http://www.cnblogs.com/qiyebao/archive/2016/03.html">2016年3月 (15)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_15" href="http://www.cnblogs.com/qiyebao/archive/2016/02.html">2016年2月 (4)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_16" href="http://www.cnblogs.com/qiyebao/archive/2016/01.html">2016年1月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_17" href="http://www.cnblogs.com/qiyebao/archive/2015/12.html">2015年12月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_18" href="http://www.cnblogs.com/qiyebao/archive/2015/11.html">2015年11月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_19" href="http://www.cnblogs.com/qiyebao/archive/2015/10.html">2015年10月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_20" href="http://www.cnblogs.com/qiyebao/archive/2015/09.html">2015年9月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_21" href="http://www.cnblogs.com/qiyebao/archive/2015/08.html">2015年8月 (11)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_22" href="http://www.cnblogs.com/qiyebao/archive/2015/07.html">2015年7月 (21)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_23" href="http://www.cnblogs.com/qiyebao/archive/2015/06.html">2015年6月 (16)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_24" href="http://www.cnblogs.com/qiyebao/archive/2015/05.html">2015年5月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_25" href="http://www.cnblogs.com/qiyebao/archive/2015/04.html">2015年4月 (14)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_26" href="http://www.cnblogs.com/qiyebao/archive/2015/03.html">2015年3月 (61)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_27" href="http://www.cnblogs.com/qiyebao/archive/2015/02.html">2015年2月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_28" href="http://www.cnblogs.com/qiyebao/archive/2015/01.html">2015年1月 (14)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_29" href="http://www.cnblogs.com/qiyebao/archive/2014/12.html">2014年12月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_30" href="http://www.cnblogs.com/qiyebao/archive/2014/11.html">2014年11月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_31" href="http://www.cnblogs.com/qiyebao/archive/2014/10.html">2014年10月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_32" href="http://www.cnblogs.com/qiyebao/archive/2014/09.html">2014年9月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_33" href="http://www.cnblogs.com/qiyebao/archive/2014/08.html">2014年8月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_34" href="http://www.cnblogs.com/qiyebao/archive/2014/07.html">2014年7月 (6)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_35" href="http://www.cnblogs.com/qiyebao/archive/2014/06.html">2014年6月 (8)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_36" href="http://www.cnblogs.com/qiyebao/archive/2014/05.html">2014年5月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_37" href="http://www.cnblogs.com/qiyebao/archive/2014/04.html">2014年4月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_38" href="http://www.cnblogs.com/qiyebao/archive/2014/03.html">2014年3月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_39" href="http://www.cnblogs.com/qiyebao/archive/2014/01.html">2014年1月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_40" href="http://www.cnblogs.com/qiyebao/archive/2013/10.html">2013年10月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_41" href="http://www.cnblogs.com/qiyebao/archive/2013/09.html">2013年9月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_42" href="http://www.cnblogs.com/qiyebao/archive/2013/07.html">2013年7月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_43" href="http://www.cnblogs.com/qiyebao/archive/2013/06.html">2013年6月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_44" href="http://www.cnblogs.com/qiyebao/archive/2012/10.html">2012年10月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_45" href="http://www.cnblogs.com/qiyebao/archive/2012/08.html">2012年8月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_46" href="http://www.cnblogs.com/qiyebao/archive/2012/07.html">2012年7月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_47" href="http://www.cnblogs.com/qiyebao/archive/2012/06.html">2012年6月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_48" href="http://www.cnblogs.com/qiyebao/archive/2012/05.html">2012年5月 (5)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_49" href="http://www.cnblogs.com/qiyebao/archive/2012/04.html">2012年4月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_50" href="http://www.cnblogs.com/qiyebao/archive/2011/12.html">2011年12月 (7)</a> </li>
+
+<li><a id="CatList_LinkList_1_Link_51" href="http://www.cnblogs.com/qiyebao/archive/2011/11.html">2011年11月 (1)</a> </li>
+
+</ul>
+
+</div>
+
+<div id="sidebar_articlecategory" class="catListArticleCategory sidebar-block">
+<h3 class="catListTitle">文章分类</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_2_Link_0" href="http://www.cnblogs.com/qiyebao/category/673361.html">STS</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qiyebao/p/4028129.html#3843202">1. Re:关于JavaScript中Get/Set访问器</a></li>
+        <li class="recent_comment_body">那么问题来了，javascript难道不是js？</li>
+        <li class="recent_comment_author">--blbl9527</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qiyebao/p/4205626.html#3694594">2. Re:RabbitMQ消息队列（三）：任务分发机制[转]</a></li>
+        <li class="recent_comment_body">屌爆了</li>
+        <li class="recent_comment_author">--豆苗稀</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qiyebao/p/4028129.html#3559324">3. Re:关于JavaScript中Get/Set访问器</a></li>
+        <li class="recent_comment_body">@饭太少吃饭get age() { return age; },少了这个逗号，并没报错...</li>
+        <li class="recent_comment_author">--草根鞋</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qiyebao/p/4028129.html#3554144">4. Re:关于JavaScript中Get/Set访问器</a></li>
+        <li class="recent_comment_body">那么问题来了，javascript难道不是js？</li>
+        <li class="recent_comment_author">--杜少博客</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/qiyebao/p/4205626.html#3516959">5. Re:RabbitMQ消息队列（三）：任务分发机制[转]</a></li>
+        <li class="recent_comment_body">mark</li>
+        <li class="recent_comment_author">--wujf</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/qiyebao/p/4484047.html">1. Linux命令-自动挂载文件/etc/fstab功能详解[转](58620)</a></li><li><a href="http://www.cnblogs.com/qiyebao/p/3887055.html">2. Windows下面安装和配置MySQL(5.6.20)(34701)</a></li><li><a href="http://www.cnblogs.com/qiyebao/p/4028129.html">3. 关于JavaScript中Get/Set访问器(22273)</a></li><li><a href="http://www.cnblogs.com/qiyebao/p/4205626.html">4. RabbitMQ消息队列（三）：任务分发机制[转](21486)</a></li><li><a href="http://www.cnblogs.com/qiyebao/p/4562557.html">5. PostgreSQL安装详细步骤（linux）(21464)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/qiyebao/p/4028129.html">1. 关于JavaScript中Get/Set访问器(4)</a></li><li><a href="http://www.cnblogs.com/qiyebao/p/4205626.html">2. RabbitMQ消息队列（三）：任务分发机制[转](3)</a></li><li><a href="http://www.cnblogs.com/qiyebao/archive/2011/11/22/2258280.html">3. 今天又开通博客园的blog了。(2)</a></li><li><a href="http://www.cnblogs.com/qiyebao/p/3382137.html">4. jsp地址栏传中文显示乱码解决方法(1)</a></li><li><a href="http://www.cnblogs.com/qiyebao/p/4205977.html">5. RabbitMQ消息队列的小伙伴: ProtoBuf（Google Protocol Buffer） [转](1)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/qiyebao/p/4484047.html">1. Linux命令-自动挂载文件/etc/fstab功能详解[转](3)</a></li><li><a href="http://www.cnblogs.com/qiyebao/archive/2012/07/23/2604849.html">2. 读一读以前的C# clr 笔记[转](2)</a></li><li><a href="http://www.cnblogs.com/qiyebao/p/3880121.html">3. Windows下面安装和配置Solr 4.9（二）(2)</a></li><li><a href="http://www.cnblogs.com/qiyebao/p/4028129.html">4. 关于JavaScript中Get/Set访问器(2)</a></li><li><a href="http://www.cnblogs.com/qiyebao/p/4573665.html">5. JAXB注解使用[转](2)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2018 企业宝
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+</body></html>

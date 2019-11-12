@@ -1,0 +1,55 @@
+系统目录：
+    pg_cast
+    pg_operator
+    pg_proc
+
+----------------------------------------------------------------------------
+查询计划
+postgresql 11 的分区表
+窗口函数
+查询规划
+vacuum analyze
+
+ON CONFLICT DO NOTHING???
+
+什么是预写日志？？？ 无日志表会跳过预写日志。
+
+数据库的检查点
+
+PostgreSQL 异常的处理？？？
+
+perform relname from pg_class where relname = p_table_name;
+if found then
+    return true;
+end if;
+
+表的持久性？？？
+FOREIGN TABLE
+ctid
+
+PostgreSQL表空间、数据库、模式、表、用户/角色之间的关系???
+
+lag lead 函数
+
+pg 分页
+
+外键
+系统列
+USING 子句
+PostgreSQL 权限
+行安全策略
+视图
+• 函数和操作符
+• 数据类型和域
+• 触发器和重写规则
+
+PostgreSQL 事物保存点
+手册上5.13依赖追踪？？？
+
+
+行构造器？？？
+
+
+ALTER TABLE raw_s1u_http ALTER COLUMN uri SET STORAGE EXTERNAL;
+
+全数据update还会造成表膨胀

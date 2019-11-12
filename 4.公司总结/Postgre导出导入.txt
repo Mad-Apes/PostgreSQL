@@ -1,0 +1,48 @@
+##第一种方式 pg_dump 命令和 pg_restore 命令。
+  |--cmd命令窗口进入 Postgre 的安装目录下的 bin 目录。该目录下包含 pg_dump.exe 和 pg_restore.exe
+  |--pg_dump 命令详解
+    |--
+    
+    
+    
+  |--psql 
+    |--命令： psql -h localhost -p 5432 -U lby -d DBTEST -f D:\lbydb.sql
+    
+    
+    
+  |--pg_restore
+    
+    
+    
+    
+pg_dump 命令示例：
+pg_dump -h localhost -p 5432 -d V2 -U postgres --inserts -t tmp_stat_5s_uemr -f D:\tmp_stat_5s_uemr.sql
+pg_dump -h localhost -p 5432 -U postgres -d lby -F c -f D:\lbydb2.dump
+回车后输入口令即该数据库的密码。
+
+pg_restore 命令示例
+pg_restore -h localhost -p 5432 -U lby -d DBTEST -v D:\lbydb2.dump
+
+##第二种方式 copy
+
+COPY copy_test TO 'E://testcopy//copy_test1.csv'(
+--ENCODING 'UTF-8'
+HEADER false
+,Delimiter '|' 
+,null ''
+);
+
+COPY copy_test TO 'E://testcopy//copy_test1.txt'(
+--ENCODING 'UTF-8'
+HEADER false
+,Delimiter '|' 
+,null ''
+);
+
+copy copy_test_from_csv FROM 'E://testcopy//copy_test1.csv' Delimiter '|' null '';
+
+copy copy_test_from_txt FROM 'E://testcopy//copy_test1.txt' Delimiter '|' null '';
+
+copy copy_test_from_byhand FROM 'E://testcopy//copy_test_byhand.txt'Delimiter '|' null '';
+
+copy copy_test_from_byhand FROM 'E://testcopy//copy_test_byhand.csv'Delimiter '|' null '';

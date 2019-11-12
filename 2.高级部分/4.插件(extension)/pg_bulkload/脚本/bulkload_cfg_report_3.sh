@@ -1,0 +1,1 @@
+ pg_bulkload -d postgres -h 127.0.0.1 -p 5432 -U postgres   -w /home/postgres/script/bulkload_cfg_report_3.ctl

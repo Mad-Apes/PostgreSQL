@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)https://www.cnblogs.com/gaojian/archive/2013/07/05/3171433.html -->
+<html lang="zh-cn"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园</title>
+<link type="text/css" rel="stylesheet" href="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/blog-common.css">
+<link id="MainCss" type="text/css" rel="stylesheet" href="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/bundle-ThinkInside.css">
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/bundle-ThinkInside-mobile.css">
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/gaojian/rss">
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/gaojian/rsd.xml">
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/gaojian/wlwmanifest.xml">
+<script async="" src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/analytics.js.下载"></script><script type="text/javascript" src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/encoder.js.下载"></script><script src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/jquery-2.2.0.min.js.下载"></script>
+<script type="text/javascript">var currentBlogApp = 'gaojian', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/blog-common.js.下载" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<!--done-->
+<div id="home">
+<div id="header">
+	<div id="blogTitle">
+	<a id="lnkBlogLogo" href="http://www.cnblogs.com/gaojian/"><img id="blogLogo" src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/logo.gif" alt="返回主页"></a>			
+		
+<!--done-->
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/gaojian/">健哥的数据花园</a></h1>
+<h2></h2>
+
+
+
+		
+	</div><!--end: blogTitle 博客的标题和副标题 -->
+	<div id="navigator">
+		
+<ul id="navList">
+<li><a id="blog_nav_sitehome" class="menu" href="http://www.cnblogs.com/">博客园</a></li>
+<li><a id="blog_nav_myhome" class="menu" href="http://www.cnblogs.com/gaojian/">首页</a></li>
+<li><a id="blog_nav_newpost" class="menu" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li><a id="blog_nav_contact" class="menu" rel="nofollow" href="https://msg.cnblogs.com/send/%E5%81%A5%E5%93%A5%E7%9A%84%E6%95%B0%E6%8D%AE%E8%8A%B1%E5%9B%AD">联系</a></li>
+<li><a id="blog_nav_rss" class="menu" href="http://www.cnblogs.com/gaojian/rss">订阅</a>
+<!--<a id="blog_nav_rss_image" class="aHeaderXML" href="http://www.cnblogs.com/gaojian/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>--></li>
+<li><a id="blog_nav_admin" class="menu" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+		<div class="blogStats">
+			
+			<div id="blog_stats">
+<span id="stats_post_count">随笔 - 942&nbsp; </span>
+<span id="stats_article_count">文章 - 3&nbsp; </span>
+<span id="stats-comment_count">评论 - 22</span>
+</div>
+			
+		</div><!--end: blogStats -->
+	</div><!--end: navigator 博客导航栏 -->
+</div><!--end: header 头部 -->
+
+<div id="main">
+	<div id="mainContent">
+	<div class="forFlow">
+		
+<div id="post_detail">
+<!--done-->
+<div id="topics">
+	<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/gaojian/p/3171433.html">PostgreSQL建表动作分析</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><p>首先，建立表：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre>pgsql<span style="color: #808080;">=</span># <span style="color: #0000ff;">create</span> <span style="color: #0000ff;">table</span> tab10(id <span style="color: #0000ff;">integer</span><span style="color: #000000;">);
+</span><span style="color: #0000ff;">CREATE</span> <span style="color: #0000ff;">TABLE</span><span style="color: #000000;">
+pgsql</span><span style="color: #808080;">=</span># <span style="color: #0000ff;">select</span> <span style="color: #800000; font-weight: bold;">147525</span><span style="color: #000000;">::regclass;
+ regclass 
+</span><span style="color: #008080;">--</span><span style="color: #008080;">--------</span>
+<span style="color: #000000;"> tab10
+(</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;"> row)
+
+pgsql</span><span style="color: #808080;">=</span># </pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>查看此时的文件信息：</p>
+<div class="cnblogs_code">
+<pre>[pgsql@localhost <span style="color: #800080;">16384</span>]$ <span style="color: #0000ff;">pwd</span>
+/home/pgsql/DemoDir/base/<span style="color: #800080;">16384</span><span style="color: #000000;">[pgsql@localhost </span><span style="color: #800080;">16384</span>]$ <span style="color: #0000ff;">ls</span> -l <span style="color: #800080;">147525</span>
+-rw------- <span style="color: #800080;">1</span> pgsql pgsql <span style="color: #800080;">0</span> Jul  <span style="color: #800080;">4</span> <span style="color: #800080;">13</span>:<span style="color: #800080;">45</span> <span style="color: #800080;">147525</span><span style="color: #000000;">
+[pgsql@localhost </span><span style="color: #800080;">16384</span>]$ </pre>
+</div>
+<p>此时，文件刚刚建立好，还是一个空文件</p>
+<p>同时，可以看到，因为建立了一个表，所以数据字典中有很多系统表被更新：</p>
+<p>例如：pg_type。</p>
+<p>这个确实有点超乎想象，因为我并未增加任何的新type。</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre>pgsql<span style="color: #808080;">=</span># <span style="color: #0000ff;">select</span> <span style="color: #ff00ff;">count</span>(<span style="color: #808080;">*</span>) <span style="color: #0000ff;">from</span><span style="color: #000000;"> pg_type;
+ </span><span style="color: #ff00ff;">count</span> 
+<span style="color: #008080;">--</span><span style="color: #008080;">-----</span>
+   <span style="color: #800000; font-weight: bold;">313</span><span style="color: #000000;">
+(</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;"> row)
+
+pgsql</span><span style="color: #808080;">=</span># <span style="color: #0000ff;">create</span> <span style="color: #0000ff;">table</span> tab10(id <span style="color: #0000ff;">integer</span><span style="color: #000000;">);
+</span><span style="color: #0000ff;">CREATE</span> <span style="color: #0000ff;">TABLE</span><span style="color: #000000;">
+
+pgsql</span><span style="color: #808080;">=</span># <span style="color: #0000ff;">select</span> <span style="color: #ff00ff;">count</span>(<span style="color: #808080;">*</span>) <span style="color: #0000ff;">from</span><span style="color: #000000;"> pg_type;
+ </span><span style="color: #ff00ff;">count</span> 
+<span style="color: #008080;">--</span><span style="color: #008080;">-----</span>
+   <span style="color: #800000; font-weight: bold;">315</span><span style="color: #000000;">
+(</span><span style="color: #800000; font-weight: bold;">1</span> row)</pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>看看增加了什么：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre>pgsql<span style="color: #808080;">=</span><span style="color: #000000;"># \x
+Expanded display </span><span style="color: #0000ff;">is</span> <span style="color: #0000ff;">on</span><span style="color: #000000;">.
+pgsql</span><span style="color: #808080;">=</span># <span style="color: #0000ff;">select</span> <span style="color: #808080;">*</span> <span style="color: #0000ff;">from</span> pg_type <span style="color: #0000ff;">where</span> typname<span style="color: #808080;">=</span><span style="color: #ff0000;">'</span><span style="color: #ff0000;">tab10</span><span style="color: #ff0000;">'</span><span style="color: #000000;">;
+</span><span style="color: #808080;">-</span><span style="color: #ff0000;">[</span><span style="color: #ff0000;"> RECORD 1 </span><span style="color: #ff0000;">]</span><span style="color: #008080;">--</span><span style="color: #008080;">+------------</span>
+typname        <span style="color: #808080;">|</span><span style="color: #000000;"> tab10
+typnamespace   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">2200</span><span style="color: #000000;">
+typowner       </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">10</span><span style="color: #000000;">
+typlen         </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+typbyval       </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+typtype        </span><span style="color: #808080;">|</span><span style="color: #000000;"> c
+typcategory    </span><span style="color: #808080;">|</span><span style="color: #000000;"> C
+typispreferred </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+typisdefined   </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+typdelim       </span><span style="color: #808080;">|</span><span style="color: #000000;"> ,
+typrelid       </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">188542</span><span style="color: #000000;">
+typelem        </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+typarray       </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">188543</span><span style="color: #000000;">
+typinput       </span><span style="color: #808080;">|</span><span style="color: #000000;"> record_in
+typoutput      </span><span style="color: #808080;">|</span><span style="color: #000000;"> record_out
+typreceive     </span><span style="color: #808080;">|</span><span style="color: #000000;"> record_recv
+typsend        </span><span style="color: #808080;">|</span><span style="color: #000000;"> record_send
+typmodin       </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #000000;">
+typmodout      </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #000000;">
+typanalyze     </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #000000;">
+typalign       </span><span style="color: #808080;">|</span><span style="color: #000000;"> d
+typstorage     </span><span style="color: #808080;">|</span><span style="color: #000000;"> x
+typnotnull     </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+typbasetype    </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+typtypmod      </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+typndims       </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+typcollation   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+typdefaultbin  </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+typdefault     </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+
+pgsql</span><span style="color: #808080;">=</span># </pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre>pgsql<span style="color: #808080;">=</span># <span style="color: #0000ff;">select</span> <span style="color: #808080;">*</span> <span style="color: #0000ff;">from</span> pg_type <span style="color: #0000ff;">where</span> typname<span style="color: #808080;">=</span><span style="color: #ff0000;">'</span><span style="color: #ff0000;">_tab10</span><span style="color: #ff0000;">'</span><span style="color: #000000;">;
+</span><span style="color: #808080;">-</span><span style="color: #ff0000;">[</span><span style="color: #ff0000;"> RECORD 1 </span><span style="color: #ff0000;">]</span><span style="color: #008080;">--</span><span style="color: #008080;">+-----------</span>
+typname        <span style="color: #808080;">|</span><span style="color: #000000;"> _tab10
+typnamespace   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">2200</span><span style="color: #000000;">
+typowner       </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">10</span><span style="color: #000000;">
+typlen         </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+typbyval       </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+typtype        </span><span style="color: #808080;">|</span><span style="color: #000000;"> b
+typcategory    </span><span style="color: #808080;">|</span><span style="color: #000000;"> A
+typispreferred </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+typisdefined   </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+typdelim       </span><span style="color: #808080;">|</span><span style="color: #000000;"> ,
+typrelid       </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+typelem        </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">188544</span><span style="color: #000000;">
+typarray       </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+typinput       </span><span style="color: #808080;">|</span><span style="color: #000000;"> array_in
+typoutput      </span><span style="color: #808080;">|</span><span style="color: #000000;"> array_out
+typreceive     </span><span style="color: #808080;">|</span><span style="color: #000000;"> array_recv
+typsend        </span><span style="color: #808080;">|</span><span style="color: #000000;"> array_send
+typmodin       </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #000000;">
+typmodout      </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #000000;">
+typanalyze     </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #000000;">
+typalign       </span><span style="color: #808080;">|</span><span style="color: #000000;"> d
+typstorage     </span><span style="color: #808080;">|</span><span style="color: #000000;"> x
+typnotnull     </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+typbasetype    </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+typtypmod      </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+typndims       </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+typcollation   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+typdefaultbin  </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+typdefault     </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+
+pgsql</span><span style="color: #808080;">=</span># </pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>创建一个表达式后，对其他的系统表的写入，也有很多</p>
+<p>再看和pg_depend之间的关联：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre>pgsql<span style="color: #808080;">=</span># <span style="color: #0000ff;">drop</span> <span style="color: #0000ff;">table</span><span style="color: #000000;"> tab10;
+</span><span style="color: #0000ff;">DROP</span> <span style="color: #0000ff;">TABLE</span><span style="color: #000000;">
+pgsql</span><span style="color: #808080;">=</span><span style="color: #000000;"># 
+pgsql</span><span style="color: #808080;">=</span># <span style="color: #0000ff;">SELECT</span> classid::regclass <span style="color: #0000ff;">AS</span><span style="color: #000000;"> "depender object class",
+    </span><span style="color: #ff00ff;">CASE</span><span style="color: #000000;"> classid
+        </span><span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pg_class</span><span style="color: #ff0000;">'</span>::regclass <span style="color: #0000ff;">THEN</span> objid::regclass::<span style="color: #0000ff;">text</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pg_type</span><span style="color: #ff0000;">'</span>::regclass <span style="color: #0000ff;">THEN</span> objid::regtype::<span style="color: #0000ff;">text</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pg_proc</span><span style="color: #ff0000;">'</span>::regclass <span style="color: #0000ff;">THEN</span> objid::regprocedure::<span style="color: #0000ff;">text</span>
+        <span style="color: #0000ff;">ELSE</span> objid::<span style="color: #0000ff;">text</span> 
+    <span style="color: #0000ff;">END</span> <span style="color: #0000ff;">AS</span> "depender object <span style="color: #ff00ff;">identity</span><span style="color: #000000;">",
+    objsubid,
+    refclassid::regclass </span><span style="color: #0000ff;">AS</span><span style="color: #000000;"> "referenced object class",
+    </span><span style="color: #ff00ff;">CASE</span><span style="color: #000000;"> refclassid
+        </span><span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pg_class</span><span style="color: #ff0000;">'</span>::regclass <span style="color: #0000ff;">THEN</span> refobjid::regclass::<span style="color: #0000ff;">text</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pg_type</span><span style="color: #ff0000;">'</span>::regclass <span style="color: #0000ff;">THEN</span> refobjid::regtype::<span style="color: #0000ff;">text</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pg_proc</span><span style="color: #ff0000;">'</span>::regclass <span style="color: #0000ff;">THEN</span> refobjid::regprocedure::<span style="color: #0000ff;">text</span>
+        <span style="color: #0000ff;">ELSE</span> refobjid::<span style="color: #0000ff;">text</span>
+    <span style="color: #0000ff;">END</span> <span style="color: #0000ff;">AS</span> "referenced object <span style="color: #ff00ff;">identity</span><span style="color: #000000;">",
+    refobjsubid,
+    </span><span style="color: #ff00ff;">CASE</span><span style="color: #000000;"> deptype
+        </span><span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">p</span><span style="color: #ff0000;">'</span> <span style="color: #0000ff;">THEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pinned</span><span style="color: #ff0000;">'</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">i</span><span style="color: #ff0000;">'</span> <span style="color: #0000ff;">THEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">internal</span><span style="color: #ff0000;">'</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">a</span><span style="color: #ff0000;">'</span> <span style="color: #0000ff;">THEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">automatic</span><span style="color: #ff0000;">'</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">n</span><span style="color: #ff0000;">'</span> <span style="color: #0000ff;">THEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">normal</span><span style="color: #ff0000;">'</span>
+    <span style="color: #0000ff;">END</span> <span style="color: #0000ff;">AS</span><span style="color: #000000;"> "dependency type"
+</span><span style="color: #0000ff;">FROM</span><span style="color: #000000;"> pg_catalog.pg_depend 
+</span><span style="color: #0000ff;">WHERE</span> objid <span style="color: #808080;">&gt;=</span> <span style="color: #800000; font-weight: bold;">16384</span> <span style="color: #808080;">OR</span> refobjid <span style="color: #808080;">&gt;=</span> <span style="color: #800000; font-weight: bold;">16384</span><span style="color: #000000;">;
+(No rows)
+pgsql</span><span style="color: #808080;">=</span><span style="color: #000000;"># 
+pgsql</span><span style="color: #808080;">=</span># <span style="color: #0000ff;">create</span> <span style="color: #0000ff;">table</span> tab10(id <span style="color: #0000ff;">integer</span><span style="color: #000000;">);
+</span><span style="color: #0000ff;">CREATE</span> <span style="color: #0000ff;">TABLE</span><span style="color: #000000;">
+pgsql</span><span style="color: #808080;">=</span># <span style="color: #0000ff;">SELECT</span> classid::regclass <span style="color: #0000ff;">AS</span><span style="color: #000000;"> "depender object class",
+    </span><span style="color: #ff00ff;">CASE</span><span style="color: #000000;"> classid
+        </span><span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pg_class</span><span style="color: #ff0000;">'</span>::regclass <span style="color: #0000ff;">THEN</span> objid::regclass::<span style="color: #0000ff;">text</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pg_type</span><span style="color: #ff0000;">'</span>::regclass <span style="color: #0000ff;">THEN</span> objid::regtype::<span style="color: #0000ff;">text</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pg_proc</span><span style="color: #ff0000;">'</span>::regclass <span style="color: #0000ff;">THEN</span> objid::regprocedure::<span style="color: #0000ff;">text</span>
+        <span style="color: #0000ff;">ELSE</span> objid::<span style="color: #0000ff;">text</span> 
+    <span style="color: #0000ff;">END</span> <span style="color: #0000ff;">AS</span> "depender object <span style="color: #ff00ff;">identity</span><span style="color: #000000;">",
+    objsubid,
+    refclassid::regclass </span><span style="color: #0000ff;">AS</span><span style="color: #000000;"> "referenced object class",
+    </span><span style="color: #ff00ff;">CASE</span><span style="color: #000000;"> refclassid
+        </span><span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pg_class</span><span style="color: #ff0000;">'</span>::regclass <span style="color: #0000ff;">THEN</span> refobjid::regclass::<span style="color: #0000ff;">text</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pg_type</span><span style="color: #ff0000;">'</span>::regclass <span style="color: #0000ff;">THEN</span> refobjid::regtype::<span style="color: #0000ff;">text</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pg_proc</span><span style="color: #ff0000;">'</span>::regclass <span style="color: #0000ff;">THEN</span> refobjid::regprocedure::<span style="color: #0000ff;">text</span>
+        <span style="color: #0000ff;">ELSE</span> refobjid::<span style="color: #0000ff;">text</span>
+    <span style="color: #0000ff;">END</span> <span style="color: #0000ff;">AS</span> "referenced object <span style="color: #ff00ff;">identity</span><span style="color: #000000;">",
+    refobjsubid,
+    </span><span style="color: #ff00ff;">CASE</span><span style="color: #000000;"> deptype
+        </span><span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">p</span><span style="color: #ff0000;">'</span> <span style="color: #0000ff;">THEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">pinned</span><span style="color: #ff0000;">'</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">i</span><span style="color: #ff0000;">'</span> <span style="color: #0000ff;">THEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">internal</span><span style="color: #ff0000;">'</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">a</span><span style="color: #ff0000;">'</span> <span style="color: #0000ff;">THEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">automatic</span><span style="color: #ff0000;">'</span>
+        <span style="color: #0000ff;">WHEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">n</span><span style="color: #ff0000;">'</span> <span style="color: #0000ff;">THEN</span> <span style="color: #ff0000;">'</span><span style="color: #ff0000;">normal</span><span style="color: #ff0000;">'</span>
+    <span style="color: #0000ff;">END</span> <span style="color: #0000ff;">AS</span><span style="color: #000000;"> "dependency type"
+</span><span style="color: #0000ff;">FROM</span><span style="color: #000000;"> pg_catalog.pg_depend 
+</span><span style="color: #0000ff;">WHERE</span> objid <span style="color: #808080;">&gt;=</span> <span style="color: #800000; font-weight: bold;">16384</span> <span style="color: #808080;">OR</span> refobjid <span style="color: #808080;">&gt;=</span> <span style="color: #800000; font-weight: bold;">16384</span><span style="color: #000000;">;
+</span><span style="color: #808080;">-</span><span style="color: #ff0000;">[</span><span style="color: #ff0000;"> RECORD 1 </span><span style="color: #ff0000;">]</span><span style="color: #008080;">--</span><span style="color: #008080;">------------+-------------</span>
+depender object class      <span style="color: #808080;">|</span><span style="color: #000000;"> pg_type
+depender object </span><span style="color: #ff00ff;">identity</span>   <span style="color: #808080;">|</span><span style="color: #000000;"> tab10
+objsubid                   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+referenced object class    </span><span style="color: #808080;">|</span><span style="color: #000000;"> pg_class
+referenced object </span><span style="color: #ff00ff;">identity</span> <span style="color: #808080;">|</span><span style="color: #000000;"> tab10
+refobjsubid                </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+dependency type            </span><span style="color: #808080;">|</span><span style="color: #000000;"> internal
+</span><span style="color: #808080;">-</span><span style="color: #ff0000;">[</span><span style="color: #ff0000;"> RECORD 2 </span><span style="color: #ff0000;">]</span><span style="color: #008080;">--</span><span style="color: #008080;">------------+-------------</span>
+depender object class      <span style="color: #808080;">|</span><span style="color: #000000;"> pg_type
+depender object </span><span style="color: #ff00ff;">identity</span>   <span style="color: #808080;">|</span> tab10<span style="color: #ff0000;">[]</span><span style="color: #000000;">
+objsubid                   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+referenced object class    </span><span style="color: #808080;">|</span><span style="color: #000000;"> pg_type
+referenced object </span><span style="color: #ff00ff;">identity</span> <span style="color: #808080;">|</span><span style="color: #000000;"> tab10
+refobjsubid                </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+dependency type            </span><span style="color: #808080;">|</span><span style="color: #000000;"> internal
+</span><span style="color: #808080;">-</span><span style="color: #ff0000;">[</span><span style="color: #ff0000;"> RECORD 3 </span><span style="color: #ff0000;">]</span><span style="color: #008080;">--</span><span style="color: #008080;">------------+-------------</span>
+depender object class      <span style="color: #808080;">|</span><span style="color: #000000;"> pg_class
+depender object </span><span style="color: #ff00ff;">identity</span>   <span style="color: #808080;">|</span><span style="color: #000000;"> tab10
+objsubid                   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+referenced object class    </span><span style="color: #808080;">|</span><span style="color: #000000;"> pg_namespace
+referenced object </span><span style="color: #ff00ff;">identity</span> <span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">2200</span><span style="color: #000000;">
+refobjsubid                </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+dependency type            </span><span style="color: #808080;">|</span><span style="color: #000000;"> normal
+
+pgsql</span><span style="color: #808080;">=</span># </pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>再看对pg_class的影响：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre>pgsql<span style="color: #808080;">=</span># <span style="color: #0000ff;">drop</span> <span style="color: #0000ff;">table</span><span style="color: #000000;"> tab10;
+</span><span style="color: #0000ff;">DROP</span> <span style="color: #0000ff;">TABLE</span><span style="color: #000000;">pgsql</span><span style="color: #808080;">=</span># <span style="color: #0000ff;">create</span> <span style="color: #0000ff;">table</span> tab10(id <span style="color: #0000ff;">integer</span><span style="color: #000000;">);
+</span><span style="color: #0000ff;">CREATE</span> <span style="color: #0000ff;">TABLE</span><span style="color: #000000;">pgsql</span><span style="color: #808080;">=</span><span style="color: #000000;"># \x
+Expanded display </span><span style="color: #0000ff;">is</span> <span style="color: #0000ff;">on</span><span style="color: #000000;">.
+pgsql</span><span style="color: #808080;">=</span># <span style="color: #0000ff;">select</span> <span style="color: #808080;">*</span> <span style="color: #0000ff;">from</span> pg_class <span style="color: #0000ff;">where</span> relname<span style="color: #808080;">=</span><span style="color: #ff0000;">'</span><span style="color: #ff0000;">tab10</span><span style="color: #ff0000;">'</span><span style="color: #000000;">;
+</span><span style="color: #808080;">-</span><span style="color: #ff0000;">[</span><span style="color: #ff0000;"> RECORD 1 </span><span style="color: #ff0000;">]</span><span style="color: #008080;">--</span><span style="color: #008080;">+-------</span>
+relname        <span style="color: #808080;">|</span><span style="color: #000000;"> tab10
+relnamespace   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">2200</span><span style="color: #000000;">
+reltype        </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">188562</span><span style="color: #000000;">
+reloftype      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+relowner       </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">10</span><span style="color: #000000;">
+relam          </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+relfilenode    </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">188560</span><span style="color: #000000;">
+reltablespace  </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+relpages       </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+reltuples      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+reltoastrelid  </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+reltoastidxid  </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+relhasindex    </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+relisshared    </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+relpersistence </span><span style="color: #808080;">|</span><span style="color: #000000;"> p
+relkind        </span><span style="color: #808080;">|</span><span style="color: #000000;"> r
+relnatts       </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+relchecks      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+relhasoids     </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+relhaspkey     </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+relhasrules    </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+relhastriggers </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+relhassubclass </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+relfrozenxid   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">2017</span><span style="color: #000000;">
+relacl         </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+reloptions     </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+
+pgsql</span><span style="color: #808080;">=</span># </pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>&nbsp;再看对 pg_attribute的影响，生成表之后：</p>
+<div class="cnblogs_code"><div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div>
+<pre>pgsql<span style="color: #808080;">=</span># <span style="color: #0000ff;">select</span> <span style="color: #800000; font-weight: bold;">188563</span><span style="color: #000000;">::regclass;
+ regclass 
+</span><span style="color: #008080;">--</span><span style="color: #008080;">--------</span>
+<span style="color: #000000;"> tab10
+(</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;"> row)
+
+pgsql</span><span style="color: #808080;">=</span><span style="color: #000000;"># \x
+Expanded display </span><span style="color: #0000ff;">is</span> <span style="color: #0000ff;">on</span><span style="color: #000000;">.
+pgsql</span><span style="color: #808080;">=</span># <span style="color: #0000ff;">select</span> <span style="color: #808080;">*</span> <span style="color: #0000ff;">from</span> pg_attribute <span style="color: #0000ff;">where</span> attrelid <span style="color: #808080;">=</span> (<span style="color: #0000ff;">select</span> <span style="color: #ff00ff;">max</span>(attrelid) <span style="color: #0000ff;">from</span><span style="color: #000000;"> pg_attribute);
+</span><span style="color: #808080;">-</span><span style="color: #ff0000;">[</span><span style="color: #ff0000;"> RECORD 1 </span><span style="color: #ff0000;">]</span><span style="color: #808080;">-+</span><span style="color: #008080;">--</span><span style="color: #008080;">-------</span>
+attrelid      <span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">188563</span><span style="color: #000000;">
+attname       </span><span style="color: #808080;">|</span><span style="color: #000000;"> tableoid
+atttypid      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">26</span><span style="color: #000000;">
+attstattarget </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attlen        </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">4</span><span style="color: #000000;">
+attnum        </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">7</span><span style="color: #000000;">
+attndims      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcacheoff   </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+atttypmod     </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+attbyval      </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+attstorage    </span><span style="color: #808080;">|</span><span style="color: #000000;"> p
+attalign      </span><span style="color: #808080;">|</span><span style="color: #000000;"> i
+attnotnull    </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+atthasdef     </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attisdropped  </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attislocal    </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+attinhcount   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcollation  </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attacl        </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+attoptions    </span><span style="color: #808080;">|</span> 
+<span style="color: #808080;">-</span><span style="color: #ff0000;">[</span><span style="color: #ff0000;"> RECORD 2 </span><span style="color: #ff0000;">]</span><span style="color: #808080;">-+</span><span style="color: #008080;">--</span><span style="color: #008080;">-------</span>
+attrelid      <span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">188563</span><span style="color: #000000;">
+attname       </span><span style="color: #808080;">|</span><span style="color: #000000;"> cmax
+atttypid      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">29</span><span style="color: #000000;">
+attstattarget </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attlen        </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">4</span><span style="color: #000000;">
+attnum        </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">6</span><span style="color: #000000;">
+attndims      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcacheoff   </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+atttypmod     </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+attbyval      </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+attstorage    </span><span style="color: #808080;">|</span><span style="color: #000000;"> p
+attalign      </span><span style="color: #808080;">|</span><span style="color: #000000;"> i
+attnotnull    </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+atthasdef     </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attisdropped  </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attislocal    </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+attinhcount   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcollation  </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attacl        </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+attoptions    </span><span style="color: #808080;">|</span> 
+<span style="color: #808080;">-</span><span style="color: #ff0000;">[</span><span style="color: #ff0000;"> RECORD 3 </span><span style="color: #ff0000;">]</span><span style="color: #808080;">-+</span><span style="color: #008080;">--</span><span style="color: #008080;">-------</span>
+attrelid      <span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">188563</span><span style="color: #000000;">
+attname       </span><span style="color: #808080;">|</span><span style="color: #000000;"> xmax
+atttypid      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">28</span><span style="color: #000000;">
+attstattarget </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attlen        </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">4</span><span style="color: #000000;">
+attnum        </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">5</span><span style="color: #000000;">
+attndims      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcacheoff   </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+atttypmod     </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+attbyval      </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+attstorage    </span><span style="color: #808080;">|</span><span style="color: #000000;"> p
+attalign      </span><span style="color: #808080;">|</span><span style="color: #000000;"> i
+attnotnull    </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+atthasdef     </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attisdropped  </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attislocal    </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+attinhcount   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcollation  </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attacl        </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+attoptions    </span><span style="color: #808080;">|</span> 
+<span style="color: #808080;">-</span><span style="color: #ff0000;">[</span><span style="color: #ff0000;"> RECORD 4 </span><span style="color: #ff0000;">]</span><span style="color: #808080;">-+</span><span style="color: #008080;">--</span><span style="color: #008080;">-------</span>
+attrelid      <span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">188563</span><span style="color: #000000;">
+attname       </span><span style="color: #808080;">|</span><span style="color: #000000;"> cmin
+atttypid      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">29</span><span style="color: #000000;">
+attstattarget </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attlen        </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">4</span><span style="color: #000000;">
+attnum        </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">4</span><span style="color: #000000;">
+attndims      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcacheoff   </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+atttypmod     </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+attbyval      </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+attstorage    </span><span style="color: #808080;">|</span><span style="color: #000000;"> p
+attalign      </span><span style="color: #808080;">|</span><span style="color: #000000;"> i
+attnotnull    </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+atthasdef     </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attisdropped  </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attislocal    </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+attinhcount   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcollation  </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attacl        </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+attoptions    </span><span style="color: #808080;">|</span> 
+<span style="color: #808080;">-</span><span style="color: #ff0000;">[</span><span style="color: #ff0000;"> RECORD 5 </span><span style="color: #ff0000;">]</span><span style="color: #808080;">-+</span><span style="color: #008080;">--</span><span style="color: #008080;">-------</span>
+attrelid      <span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">188563</span><span style="color: #000000;">
+attname       </span><span style="color: #808080;">|</span><span style="color: #000000;"> xmin
+atttypid      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">28</span><span style="color: #000000;">
+attstattarget </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attlen        </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">4</span><span style="color: #000000;">
+attnum        </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">3</span><span style="color: #000000;">
+attndims      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcacheoff   </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+atttypmod     </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+attbyval      </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+attstorage    </span><span style="color: #808080;">|</span><span style="color: #000000;"> p
+attalign      </span><span style="color: #808080;">|</span><span style="color: #000000;"> i
+attnotnull    </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+atthasdef     </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attisdropped  </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attislocal    </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+attinhcount   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcollation  </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attacl        </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+attoptions    </span><span style="color: #808080;">|</span> 
+<span style="color: #808080;">-</span><span style="color: #ff0000;">[</span><span style="color: #ff0000;"> RECORD 6 </span><span style="color: #ff0000;">]</span><span style="color: #808080;">-+</span><span style="color: #008080;">--</span><span style="color: #008080;">-------</span>
+attrelid      <span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">188563</span><span style="color: #000000;">
+attname       </span><span style="color: #808080;">|</span><span style="color: #000000;"> ctid
+atttypid      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">27</span><span style="color: #000000;">
+attstattarget </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attlen        </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">6</span><span style="color: #000000;">
+attnum        </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+attndims      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcacheoff   </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+atttypmod     </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+attbyval      </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attstorage    </span><span style="color: #808080;">|</span><span style="color: #000000;"> p
+attalign      </span><span style="color: #808080;">|</span><span style="color: #000000;"> s
+attnotnull    </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+atthasdef     </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attisdropped  </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attislocal    </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+attinhcount   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcollation  </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attacl        </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+attoptions    </span><span style="color: #808080;">|</span> 
+<span style="color: #808080;">-</span><span style="color: #ff0000;">[</span><span style="color: #ff0000;"> RECORD 7 </span><span style="color: #ff0000;">]</span><span style="color: #808080;">-+</span><span style="color: #008080;">--</span><span style="color: #008080;">-------</span>
+attrelid      <span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">188563</span><span style="color: #000000;">
+attname       </span><span style="color: #808080;">|</span><span style="color: #000000;"> id
+atttypid      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">23</span><span style="color: #000000;">
+attstattarget </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+attlen        </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">4</span><span style="color: #000000;">
+attnum        </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+attndims      </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcacheoff   </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+atttypmod     </span><span style="color: #808080;">|</span> <span style="color: #808080;">-</span><span style="color: #800000; font-weight: bold;">1</span><span style="color: #000000;">
+attbyval      </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+attstorage    </span><span style="color: #808080;">|</span><span style="color: #000000;"> p
+attalign      </span><span style="color: #808080;">|</span><span style="color: #000000;"> i
+attnotnull    </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+atthasdef     </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attisdropped  </span><span style="color: #808080;">|</span><span style="color: #000000;"> f
+attislocal    </span><span style="color: #808080;">|</span><span style="color: #000000;"> t
+attinhcount   </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attcollation  </span><span style="color: #808080;">|</span> <span style="color: #800000; font-weight: bold;">0</span><span style="color: #000000;">
+attacl        </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+attoptions    </span><span style="color: #808080;">|</span><span style="color: #000000;"> 
+
+pgsql</span><span style="color: #808080;">=</span># </pre>
+<div class="cnblogs_code_toolbar"><span class="cnblogs_code_copy"><a href="javascript:void(0);" onclick="copyCnblogsCode(this)" title="复制代码"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/copycode.gif" alt="复制代码"></a></span></div></div>
+<p>基本就是这些了。</p></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag">标签: <a href="http://www.cnblogs.com/gaojian/tag/Postgresql/">Postgresql</a>, <a href="http://www.cnblogs.com/gaojian/tag/create%20table/">create table</a></div>
+<div id="blog_post_info"><div id="green_channel">
+        <a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(3171433,cb_blogId,1);green_channel_success(this,&#39;谢谢推荐！&#39;);">好文要顶</a>
+            <a id="green_channel_follow" onclick="follow(&#39;e56aa82b-05c7-e111-aa3f-842b2b196315&#39;);" href="javascript:void(0);">关注我</a>
+    <a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a>
+    <a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/icon_weibo_24.png" alt=""></a>
+    <a id="green_channel_wechat" href="javascript:void(0);" title="分享至微信" onclick="shareOnWechat()"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/wechat.png" alt=""></a>
+</div>
+<div id="author_profile">
+    <div id="author_profile_info" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/gaojian/" target="_blank"><img src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/sample_face.gif" class="author_avatar" alt=""></a>
+        <div id="author_profile_detail" class="author_profile_info">
+            <a href="http://home.cnblogs.com/u/gaojian/">健哥的数据花园</a><br>
+            <a href="http://home.cnblogs.com/u/gaojian/followees">关注 - 33</a><br>
+            <a href="http://home.cnblogs.com/u/gaojian/followers">粉丝 - 53</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div id="author_profile_honor"></div>
+    <div id="author_profile_follow">
+                <a href="javascript:void(0);" onclick="follow(&#39;e56aa82b-05c7-e111-aa3f-842b2b196315&#39;);return false;">+加关注</a>
+    </div>
+</div>
+<div id="div_digg">
+    <div class="diggit" onclick="votePost(3171433,&#39;Digg&#39;)">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+    <div class="buryit" onclick="votePost(3171433,&#39;Bury&#39;)">
+        <span class="burynum" id="bury_count">0</span>
+    </div>
+    <div class="clear"></div>
+    <div class="diggword" id="digg_tips">
+    </div>
+</div>
+<script type="text/javascript">
+    currentDiggType = 0;
+</script></div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/gaojian/p/3171325.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/gaojian/p/3171325.html" title="发布于2013-07-04 12:15">PostgreSQL的schema信息，存储于何处</a><br><a href="http://www.cnblogs.com/gaojian/p/3173776.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/gaojian/p/3173776.html" title="发布于2013-07-05 15:32">PostgreSQL的 initdb 源代码分析之一</a><br></div>
+</div>
+
+
+		</div>
+		<div class="postDesc">posted @ <span id="post-date">2013-07-05 09:40</span> <a href="http://www.cnblogs.com/gaojian/">健哥的数据花园</a> 阅读(<span id="post_view_count">1667</span>) 评论(<span id="post_comment_count">0</span>)  <a href="https://i.cnblogs.com/EditPosts.aspx?postid=3171433" rel="nofollow">编辑</a> <a href="https://www.cnblogs.com/gaojian/archive/2013/07/05/3171433.html#" onclick="AddToWz(3171433);return false;">收藏</a></div>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=121807,cb_entryId=3171433,cb_blogApp=currentBlogApp,cb_blogUserGuid='e56aa82b-05c7-e111-aa3f-842b2b196315',cb_entryCreatedDate='2013/7/5 9:40:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
+	
+</div><!--end: topics 文章、评论容器-->
+</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id="comment_form" class="commentform">
+<a name="commentform"></a>
+<div id="divCommentShow"></div>
+<div id="comment_nav"><span id="span_refresh_tips"></span><a href="javascript:void(0);" onclick="return RefreshCommentList();" id="lnk_RefreshComments" runat="server" clientidmode="Static">刷新评论</a><a href="https://www.cnblogs.com/gaojian/archive/2013/07/05/3171433.html#" onclick="return RefreshPage();">刷新页面</a><a href="https://www.cnblogs.com/gaojian/archive/2013/07/05/3171433.html#top">返回顶部</a></div>
+<div id="comment_form_container"><div class="login_tips">注册用户登录后才能发表评论，请 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return login(&#39;commentform&#39;);">登录</a> 或 <a rel="nofollow" href="javascript:void(0);" class="underline" onclick="return register();">注册</a>，<a href="http://www.cnblogs.com/">访问</a>网站首页。</div></div>
+<div class="ad_text_commentbox" id="ad_text_under_commentbox"></div>
+<div id="ad_t2"><a href="http://www.ucancode.com/index.htm" target="_blank">【推荐】超50万VC++源码: 大型工控、组态\仿真、建模CAD源码2018！</a><br><a href="https://cloud.tencent.com/developer/support-plan?fromSource=gwzcw.710852.710852.710852" target="_blank">【推荐】加入腾讯云自媒体扶持计划，免费领取域名&amp;服务器</a><br></div>
+<div id="opt_under_post"></div>
+<div id="cnblogs_c1" class="c_ad_block"><a href="https://ke.qq.com/next/index.html?from=176158" target="_blank"><img width="300" height="250" src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/24442-20180108123632644-2119592979.png" alt="ke0108"></a></div>
+<div id="under_post_news"><div class="itnews c_ad_block"><b>最新IT新闻</b>:<br> ·  <a href="https://news.cnblogs.com/n/586830/" target="_blank">索尼宣布PS4销量破7360万台 PS VR销量超200万台</a><br> ·  <a href="https://news.cnblogs.com/n/586829/" target="_blank">2018中国航天开门红：长二丁火箭成功发射高景一号02组卫星</a><br> ·  <a href="https://news.cnblogs.com/n/586828/" target="_blank">致AMD电脑变砖！微软紧急撤回Win7/10 CPU漏洞补丁</a><br> ·  <a href="https://news.cnblogs.com/n/586827/" target="_blank">韩雪入职新浪科技任首席体验官</a><br> ·  <a href="https://news.cnblogs.com/n/586824/" target="_blank">谷歌工程师点赞中国程序员 实现Node.js启动超4倍提速</a><br>» <a href="http://news.cnblogs.com/" title="IT新闻" target="_blank">更多新闻...</a></div></div>
+<div id="cnblogs_c2" class="c_ad_block"><a href="http://click.aliyun.com/m/34770/" target="_blank"><img width="468" height="60" src="./PostgreSQL建表动作分析 - 健哥的数据花园 - 博客园_files/24442-20171208101900738-116140477.jpg" alt="阿里云C2-1208"></a></div>
+<div id="under_post_kb"><div class="itnews c_ad_block" id="kb_block"><b>最新知识库文章</b>:<br><div id="kb_recent"> ·  <a href="http://kb.cnblogs.com/page/585502/" target="_blank">步入云计算</a><br> ·  <a href="http://kb.cnblogs.com/page/531409/" target="_blank">以操作系统的角度述说线程与进程</a><br> ·  <a href="http://kb.cnblogs.com/page/141729/" target="_blank">软件测试转型之路</a><br> ·  <a href="http://kb.cnblogs.com/page/177402/" target="_blank">门内门外看招聘</a><br> ·  <a href="http://kb.cnblogs.com/page/112506/" target="_blank">大道至简，职场上做人做事做管理</a><br></div>» <a href="http://kb.cnblogs.com/" target="_blank">更多知识库文章...</a></div></div>
+<div id="HistoryToday" class="c_ad_block"></div>
+<script type="text/javascript">
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+	</div><!--end: forFlow -->
+	</div><!--end: mainContent 主体内容容器-->
+
+	<div id="sideBar">
+		<div id="sideBarMain">
+			
+<!--done-->
+<div class="newsItem">
+<h3 class="catListTitle">公告</h3>
+	<div id="blog-news"><div id="profile_block">昵称：<a href="https://home.cnblogs.com/u/gaojian/">健哥的数据花园</a><br>园龄：<a href="https://home.cnblogs.com/u/gaojian/" title="入园时间：2012-07-06">5年6个月</a><br>粉丝：<a href="https://home.cnblogs.com/u/gaojian/followers/">53</a><br>关注：<a href="https://home.cnblogs.com/u/gaojian/followees/">33</a><div id="p_b_follow"><a href="javascript:void(0);" onclick="follow(&#39;e56aa82b-05c7-e111-aa3f-842b2b196315&#39;)">+加关注</a></div><script>getFollowStatus('e56aa82b-05c7-e111-aa3f-842b2b196315')</script></div></div><script type="text/javascript">loadBlogNews();</script>
+</div>
+
+			<div id="blog-calendar" style=""><table id="blogCalendar" class="Cal" cellspacing="0" cellpadding="0" title="Calendar">
+	<tbody><tr><td colspan="7"><table class="CalTitle" cellspacing="0">
+		<tbody><tr><td class="CalNextPrev"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2017/12/01&#39;);return false;">&lt;</a></td><td align="center">2018年1月</td><td class="CalNextPrev" align="right"><a href="javascript:void(0);" onclick="loadBlogCalendar(&#39;2018/02/01&#39;);return false;">&gt;</a></td></tr>
+	</tbody></table></td></tr><tr><th class="CalDayHeader" align="center" abbr="日" scope="col">日</th><th class="CalDayHeader" align="center" abbr="一" scope="col">一</th><th class="CalDayHeader" align="center" abbr="二" scope="col">二</th><th class="CalDayHeader" align="center" abbr="三" scope="col">三</th><th class="CalDayHeader" align="center" abbr="四" scope="col">四</th><th class="CalDayHeader" align="center" abbr="五" scope="col">五</th><th class="CalDayHeader" align="center" abbr="六" scope="col">六</th></tr><tr><td class="CalOtherMonthDay" align="center">31</td><td align="center">1</td><td align="center">2</td><td align="center">3</td><td align="center">4</td><td align="center">5</td><td class="CalWeekendDay" align="center">6</td></tr><tr><td class="CalWeekendDay" align="center">7</td><td align="center">8</td><td class="CalTodayDay" align="center">9</td><td align="center">10</td><td align="center">11</td><td align="center">12</td><td class="CalWeekendDay" align="center">13</td></tr><tr><td class="CalWeekendDay" align="center">14</td><td align="center">15</td><td align="center">16</td><td align="center">17</td><td align="center">18</td><td align="center">19</td><td class="CalWeekendDay" align="center">20</td></tr><tr><td class="CalWeekendDay" align="center">21</td><td align="center">22</td><td align="center">23</td><td align="center">24</td><td align="center">25</td><td align="center">26</td><td class="CalWeekendDay" align="center">27</td></tr><tr><td class="CalWeekendDay" align="center">28</td><td align="center">29</td><td align="center">30</td><td align="center">31</td><td class="CalOtherMonthDay" align="center">1</td><td class="CalOtherMonthDay" align="center">2</td><td class="CalOtherMonthDay" align="center">3</td></tr><tr><td class="CalOtherMonthDay" align="center">4</td><td class="CalOtherMonthDay" align="center">5</td><td class="CalOtherMonthDay" align="center">6</td><td class="CalOtherMonthDay" align="center">7</td><td class="CalOtherMonthDay" align="center">8</td><td class="CalOtherMonthDay" align="center">9</td><td class="CalOtherMonthDay" align="center">10</td></tr>
+</tbody></table></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+			
+			<div id="leftcontentcontainer">
+				<div id="blog-sidecolumn"><div id="sidebar_search" class="sidebar-block">
+<div id="sidebar_search" class="mySearch">
+<h3 class="catListTitle">搜索</h3>
+<div id="sidebar_search_box">
+<div id="widget_my_zzk" class="div_my_zzk"><input type="text" id="q" onkeydown="return zzk_go_enter(event);" class="input_my_zzk">&nbsp;<input onclick="zzk_go()" type="button" value="找找看" id="btnZzk" class="btn_my_zzk"></div>
+<div id="widget_my_google" class="div_my_zzk"><input type="text" name="google_q" id="google_q" onkeydown="return google_go_enter(event)" class="input_my_zzk">&nbsp;<input onclick="google_go()" type="button" value="谷歌搜索" class="btn_my_zzk"></div>
+</div>
+</div>
+
+</div><div id="sidebar_shortcut" class="sidebar-block">
+<div class="catListLink">
+<h3 class="catListTitle">常用链接</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/gaojian/p/" title="我的博客的随笔列表">我的随笔</a></li><li><a href="http://www.cnblogs.com/gaojian/MyComments.html" title="我发表过的评论列表">我的评论</a></li><li><a href="http://www.cnblogs.com/gaojian/OtherPosts.html" title="我评论过的随笔列表">我的参与</a></li><li><a href="http://www.cnblogs.com/gaojian/RecentComments.html" title="我的博客的评论列表">最新评论</a></li><li><a href="http://www.cnblogs.com/gaojian/tag/" title="我的博客的标签列表">我的标签</a></li>
+</ul>
+<div id="itemListLin_con" style="display:none;">
+<ul>
+
+</ul>
+</div>
+</div></div><div id="sidebar_toptags" class="sidebar-block">
+<div class="catListTag">
+<h3 class="catListTitle">我的标签</h3>
+<ul>
+<li><a href="http://www.cnblogs.com/gaojian/tag/GNU/">GNU</a>(188)</li><li><a href="http://www.cnblogs.com/gaojian/tag/make/">make</a>(186)</li><li><a href="http://www.cnblogs.com/gaojian/tag/Postgresql/">Postgresql</a>(186)</li><li><a href="http://www.cnblogs.com/gaojian/tag/manual/">manual</a>(182)</li><li><a href="http://www.cnblogs.com/gaojian/tag/Oracle/">Oracle</a>(52)</li><li><a href="http://www.cnblogs.com/gaojian/tag/spark/">spark</a>(38)</li><li><a href="http://www.cnblogs.com/gaojian/tag/plsql/">plsql</a>(34)</li><li><a href="http://www.cnblogs.com/gaojian/tag/python/">python</a>(34)</li><li><a href="http://www.cnblogs.com/gaojian/tag/Makefile/">Makefile</a>(31)</li><li><a href="http://www.cnblogs.com/gaojian/tag/initdb/">initdb</a>(23)</li><li><a href="http://www.cnblogs.com/gaojian/tag/">更多</a></li>
+</ul>
+</div></div><div id="sidebar_categories">
+<div id="sidebar_postarchive" class="catListPostArchive sidebar-block">
+<h3 class="catListTitle">随笔档案</h3>
+
+<ul>
+
+<li><a id="CatList_LinkList_0_Link_0" href="http://www.cnblogs.com/gaojian/archive/2017/12.html">2017年12月 (1)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_1" href="http://www.cnblogs.com/gaojian/archive/2017/10.html">2017年10月 (43)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_2" href="http://www.cnblogs.com/gaojian/archive/2017/09.html">2017年9月 (57)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_3" href="http://www.cnblogs.com/gaojian/archive/2014/05.html">2014年5月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_4" href="http://www.cnblogs.com/gaojian/archive/2014/04.html">2014年4月 (30)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_5" href="http://www.cnblogs.com/gaojian/archive/2014/03.html">2014年3月 (20)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_6" href="http://www.cnblogs.com/gaojian/archive/2014/01.html">2014年1月 (12)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_7" href="http://www.cnblogs.com/gaojian/archive/2013/10.html">2013年10月 (24)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_8" href="http://www.cnblogs.com/gaojian/archive/2013/09.html">2013年9月 (24)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_9" href="http://www.cnblogs.com/gaojian/archive/2013/08.html">2013年8月 (52)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_10" href="http://www.cnblogs.com/gaojian/archive/2013/07.html">2013年7月 (88)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_11" href="http://www.cnblogs.com/gaojian/archive/2013/06.html">2013年6月 (46)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_12" href="http://www.cnblogs.com/gaojian/archive/2013/05.html">2013年5月 (53)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_13" href="http://www.cnblogs.com/gaojian/archive/2013/02.html">2013年2月 (2)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_14" href="http://www.cnblogs.com/gaojian/archive/2013/01.html">2013年1月 (9)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_15" href="http://www.cnblogs.com/gaojian/archive/2012/12.html">2012年12月 (3)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_16" href="http://www.cnblogs.com/gaojian/archive/2012/11.html">2012年11月 (83)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_17" href="http://www.cnblogs.com/gaojian/archive/2012/10.html">2012年10月 (106)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_18" href="http://www.cnblogs.com/gaojian/archive/2012/09.html">2012年9月 (198)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_19" href="http://www.cnblogs.com/gaojian/archive/2012/08.html">2012年8月 (38)</a> </li>
+
+<li><a id="CatList_LinkList_0_Link_20" href="http://www.cnblogs.com/gaojian/archive/2012/07.html">2012年7月 (50)</a> </li>
+
+</ul>
+
+</div>
+
+</div><div id="sidebar_recentcomments" class="sidebar-block"><div id="recent_comments_wrap">
+<div class="catListComment">
+<h3 class="catListTitle">最新评论</h3>
+
+	<div id="RecentCommentsBlock"><ul>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/gaojian/archive/2012/10/25/2738309.html#3861211">1. Re:PostgreSQL 的pg_buffercache 代码研究</a></li>
+        <li class="recent_comment_body">@Li.Sang求问 SRF是啥？十分感谢~...</li>
+        <li class="recent_comment_author">--非我在</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/gaojian/archive/2012/10/24/2737470.html#3758677">2. Re:PostgreSQL 在何处真正开始写数据</a></li>
+        <li class="recent_comment_body">插入操作只写到共享内存中，FlushBuffer进行刷盘，PG的设计思路不错！</li>
+        <li class="recent_comment_author">--狂神314</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/gaojian/archive/2012/08/08/2627868.html#3742797">3. Re:pgpool-II的性能缺陷</a></li>
+        <li class="recent_comment_body">你好：这是流复制的缺陷，还是pgpool的缺陷哦；如果是异步节点，流复制对SQL进行回放也需要时间，但是要不了30s呢？</li>
+        <li class="recent_comment_author">--狂神314</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/gaojian/p/3164792.html#3729715">4. Re:对PostgreSQL xmax的理解</a></li>
+        <li class="recent_comment_body">很不错</li>
+        <li class="recent_comment_author">--sirlipeng</li>
+        <li class="recent_comment_title"><a href="http://www.cnblogs.com/gaojian/p/3261315.html#3679188">5. Re:PostgreSQL下安装pg_stat_statements</a></li>
+        <li class="recent_comment_body">楼主你是fujitsu的么？</li>
+        <li class="recent_comment_author">--非我在</li>
+</ul>
+</div>
+</div>
+</div></div><div id="sidebar_topviewedposts" class="sidebar-block"><div id="topview_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">阅读排行榜</h3>
+	<div id="TopViewPostsBlock"><ul><li><a href="http://www.cnblogs.com/gaojian/p/3317456.html">1. MySQL下查看用户和建立用户(52865)</a></li><li><a href="http://www.cnblogs.com/gaojian/archive/2012/07/11/2586075.html">2. Makefile 的 遗漏分隔符错误信息(13305)</a></li><li><a href="http://www.cnblogs.com/gaojian/archive/2012/10/29/2744963.html">3. 对Linux 下 SIGUSR1  与  SIGUSR2 的理解(13072)</a></li><li><a href="http://www.cnblogs.com/gaojian/archive/2012/11/13/2768367.html">4. PLSQL 的 for循环的小例子(12775)</a></li><li><a href="http://www.cnblogs.com/gaojian/p/3644524.html">5. ORA-00119: invalid specification for system parameter LOCAL_LISTENER(12583)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topcommentedposts" class="sidebar-block"><div id="topfeedback_posts_wrap">
+<div class="catListFeedback">
+<h3 class="catListTitle">评论排行榜</h3>
+	<div id="TopFeedbackPostsBlock"><ul><li><a href="http://www.cnblogs.com/gaojian/p/3196244.html">1. 简单的Slony-I设置实例(3)</a></li><li><a href="http://www.cnblogs.com/gaojian/archive/2012/10/25/2738309.html">2. PostgreSQL 的pg_buffercache 代码研究(2)</a></li><li><a href="http://www.cnblogs.com/gaojian/p/3644524.html">3. ORA-00119: invalid specification for system parameter LOCAL_LISTENER(2)</a></li><li><a href="http://www.cnblogs.com/gaojian/p/3327790.html">4. 通过unixODBC访问PostgreSQL数据库(2)</a></li><li><a href="http://www.cnblogs.com/gaojian/archive/2013/05/17/3083290.html">5. 从自己的程序中使用lex的一个小例子(2)</a></li></ul></div>
+</div>
+</div></div><div id="sidebar_topdiggedposts" class="sidebar-block"><div id="topdigg_posts_wrap">
+<div class="catListView">
+<h3 class="catListTitle">推荐排行榜</h3>
+<div id="TopDiggPostsBlock"><ul><li><a href="http://www.cnblogs.com/gaojian/archive/2012/07/11/2586075.html">1. Makefile 的 遗漏分隔符错误信息(1)</a></li><li><a href="http://www.cnblogs.com/gaojian/archive/2012/10/24/2737470.html">2. PostgreSQL 在何处真正开始写数据(1)</a></li><li><a href="http://www.cnblogs.com/gaojian/archive/2012/10/12/2720774.html">3. linux 的 sem 参数(1)</a></li><li><a href="http://www.cnblogs.com/gaojian/archive/2012/10/04/2711494.html">4. 对 makefile 中 eval 函数的学习体会(1)</a></li><li><a href="http://www.cnblogs.com/gaojian/archive/2012/09/21/2696772.html">5. 对 makefile 中 .PRECIOUS 的学习(1)</a></li></ul></div>
+</div></div></div></div><script type="text/javascript">loadBlogSideColumn();</script>
+			</div>
+			
+		</div><!--end: sideBarMain -->
+	</div><!--end: sideBar 侧边栏容器 -->
+	<div class="clear"></div>
+	</div><!--end: main -->
+	<div class="clear"></div>
+	<div id="footer">
+		
+<!--done-->
+Copyright ©2018 健哥的数据花园
+	</div><!--end: footer -->
+</div><!--end: home 自定义的最大容器 -->
+
+
+</body></html>

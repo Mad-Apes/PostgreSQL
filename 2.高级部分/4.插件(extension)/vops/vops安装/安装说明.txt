@@ -1,0 +1,4 @@
+--将vops所需要的文件 放入 /usr/local/postgresql-10.3/contrib/vops 文件夹下
+
+--编译 xshell 进入该文件夹 执行 make 命令
+--安装 xshell 进入该文件夹 执行 make install 命令

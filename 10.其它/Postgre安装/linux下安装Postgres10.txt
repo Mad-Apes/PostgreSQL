@@ -1,0 +1,225 @@
+###############################################################################################################################################
+
+#-------------------- Postgresql 安装方式一 源码安装 --------------------
+
+#创建用户和组
+groupadd postgres
+useradd -g postgres postgres
+
+#进入安装目录
+cd /usr/local/
+
+#删除原有安装（如果有的话）
+rm -rf postgres*
+
+
+#获取压缩包
+wget https://ftp.postgresql.org/pub/source/v10.3/postgresql-10.3.tar.gz
+
+#解压
+tar zxvf postgresql-9.6.1.tar.gz
+
+#配置
+cd postgresql-9.6.1
+./configure --prefix=/usr/local/postgresql --without-readline --without-zlib --with-blocksize=32 --with-segsize=2 --with-icu
+
+#--------------
+#./configure --prefix=/usr/local/postgresql --without-readline --without-zlib --with-blocksize=32 --with-segsize=2 --with-icu --with-icu
+#
+#出现  	configure: error: Package requirements (icu-uc icu-i18n) were not met:  No package 'icu-uc' found
+		#解决方案如下
+		#yum install libicu-devel
+#
+#出现 	checking for gcc... no
+#		checking for cc... no
+#		configure: error: in `/usr/local/postgresql-10.6':
+#		configure: error: no acceptable C compiler found in $PATH
+#		See `config.log' for more details
+#		解决档案
+#		yum install gcc
+#
+#------------------
+
+
+#编译安装
+make && make install
+
+#安装contrib目录下的一些工具，是第三方组织的一些工具代码
+cd contrib
+make && make install
+
+#建postgres数据库的目录
+mkdir -p /var/postgresql/data
+chown postgres:postgres /var/postgresql -R
+chown postgres:postgres /usr/local/postgresql -R
+
+#切换用户
+su - postgres
+
+#在~/.bash_profile的最后添加如下内容
+
+export PGHOME=/usr/local/postgresql
+export PGDATA=/var/postgresql/data
+export PATH=$PGHOME/bin:$PATH
+export MANPATH=$PGHOME/share/man:$MANPATH
+export LANG=en_US.utf8
+export DATE=`date +"%Y-%m-%d %H:%M:%S"`
+export LD_LIBRARY_PATH=$PGHOME/lib:$LD_LIBRARY_PATH
+alias rm='rm  -i'
+alias ll='ls -lh'
+#alias pg_start='pg_ctl start -D $PGDATA'
+#alias pg_stop='pg_ctl stop -D $PGDATA -m fast'
+
+#初始化数据库
+initdb -D /var/postgresql/data
+
+#启动服务
+pg_ctl -D /var/postgresql/data -l /var/postgresql/logfile start
+
+
+#允许远程连接
+#修改客户端认证配置文件pg_hba.conf，将需要远程访问数据库的IP地址或地址段加入该文件
+vi /var/postgresql/data/pg_hba.conf
+
+#在文件的最下方加上下面的这句话（出于安全考虑，不建议这样配置）
+host    all         all         0.0.0.0/0             trust
+
+#设置监听整个网络，查找“listen_addresses ”字符串，
+vi /var/postgresql/data/postgresql.conf
+
+#修改为如下：
+listen_addresses = '*'
+
+#重启服务
+pg_ctl -D /var/postgresql/data -l /var/postgresql/logfile restart
+
+#停止服务
+pg_ctl -D /var/postgresql/data -l /var/postgresql/logfile stop
+
+#-------------------- Postgresql 安装方式二 yum安装 --------------------
+
+#Install the repository RPM:
+yum -y install https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm
+
+#Install the client packages:
+yum install postgresql10
+
+#Optionally install the server packages:
+yum install postgresql10-server
+
+#Optionally initialize the database and enable automatic start:
+/usr/pgsql-10/bin/postgresql-10-setup initdb
+systemctl enable postgresql-10
+systemctl start postgresql-10
+
+#切换用户
+su postgres
+#进入 psql
+psql
+#修改 postgres 的密码为 postgres
+alter  user postgres with password 'postgres';
+
+#修改配置文件
+cd /var/lib/pgsql/10/data
+vi pg_hba.conf
+#把配置文件中的认证 METHOD的ident修改为trust
+#重新启动数据库
+systemctl restart postgresql-10
+
+
+卸载
+a.yum 删除软件包：
+
+　　yum remove postgresql*
+
+　　b.删除相关目录文件：
+
+       rm -rf  /var/lib/pgsql
+
+　　rm -rf  /usr/pgsql*
+
+rpm -e pgdg-centos11-11-2.noarch
+
+
+     c.删除pg相关用户组/用户
+
+　　userdel -r postgres
+　　groupdel postgres
+###############################################################################################################################################
+
+#-------------------- VOPS 扩展 --------------------
+#下载 VOPS 扩展程序。URL：https://github.com/postgrespro/vops  说明：为避免出现 row is too big 的错误。使用源码安装数据库，设置 with-blocksize。
+
+#将vops所需要的文件 放入 /usr/local/postgresql-10.3/contrib/vops 文件夹下。具体文件见 vops安装文件 文件夹。
+
+#注意文件夹 vops 的权限 设置为 777
+
+#进入相应目录执行
+cd /usr/local/postgresql-10.3/contrib/vops
+make && make instal
+
+
+#重启数据库  执行 create extension vops;
+
+###############################################################################################################################################
+#-------------------- PgAdmin4 Web 安装方式一 whl--------------------
+
+#1:下载.whl包
+wget https://ftp.postgresql.org/pub/pgadmin/pgadmin4/v2.0/pip/pgadmin4-2.0-py2.py3-none-any.whl
+
+#2:使用pip安装pgadmin4:
+pip2 install pgadmin4-2.0-py2.py3-none-any.whl
+
+#安装出现错误：error: command 'gcc' failed with exit status 1
+
+yum install gcc libffi-devel python-devel openssl-devel -y
+
+#再次执行安装命令：pip2 install pgadmin4-2.0-py2.py3-none-any.whl 成功
+
+#3：进入安装目录
+cd /usr/lib/python2.7/site-packages/pgadmin4
+
+#4：执行命令 并设置邮箱、密码、启动。localhost:5050
+python pgAdmin4.py
+
+
+#-------------------- PgAdmin4 Web 安装方式二 yum安装--------------------
+#yum 安装 RPM，如果安装数据库的时候使用的该方式，改装 PgAdmin 是该步可以略去
+yum -y install https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-centos10-10-2.noarch.rpm
+
+#安装 PgAdmin4
+yum install pgadmin4-v2
+
+#进入安装目录 并执行
+cd /usr/pgadmin4-v2/bin
+./pgadmin4-v2-web-setup.sh
+
+#出现以下信息：需要设置邮箱和密码。此处的邮箱和密码是 登录 web 版 PgAdmin 的时候使用的。
+NOTE: Configuring authentication for SERVER mode.
+
+Enter the email address and password to use for the initial pgAdmin user account:
+
+Email address: 996396672@qq.com
+Password:
+Retype password:
+pgAdmin 4 - Application Initialisation
+======================================
+
+We can now configure the Apache Web server for you. This will create the pgAdmin4 conf file under /etc/httpd/conf.d/. Do you wish to continue?
+1) Yes
+2) No
+#? 1
+
+pgAdmin4-v2 Apache config file is created as /etc/httpd/conf.d/pgadmin4-v2.conf
+Apache web server is not running. We can start the web server for you to finish pgAdmin4 installation. Would you like to continue?
+1) Yes
+2) No
+#? 1
+
+Apache successfully started. You can now start using pgAdmin4 in web mode
+
+#启动 PgAdmin4
+cd /usr/lib/python2.7/site-packages/pgadmin4-web
+python pgAdmin4.py
+Starting pgAdmin 4. Please navigate to http://127.0.0.1:5050 in your browser.
+###############################################################################################################################################

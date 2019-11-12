@@ -1,0 +1,3 @@
+## ERROR:  COALESCE types integer and text cannot be matched
+    --coalesce 函数传入的两个参数类型必须一致。所以，必须把把把其中一个参数进行数据类型的转换。
+    
