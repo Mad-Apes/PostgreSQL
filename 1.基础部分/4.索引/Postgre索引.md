@@ -1,8 +1,11 @@
 # 创建索引的目的
+```
 	没有创建索引之前， 查询语句需要扫描整张表，一行一行的去匹配。如果数据量很大的时候，效率很低。创建索引，可以用一种有效的方式来定位匹配行。
 	例如，它可能仅仅遍历一个搜索树的几层而已。
+```
 
 # 知识点
+```
 	索引被创建后，不需要手动维护索引，系统在表更新时自动更新索引。系统会选择在使用索引比顺序扫描表效率高时使用索引。
 	注意应该定期使用 analyze 命令来更新统计信息，使查询规划器能够做出正确的选择。
 
@@ -12,7 +15,7 @@
 	直到索引创建完成，
 
 	索引创建后，系统必须保持索引与表的同步，这必然增加了表的负担，因此创建索引应该注意，那些很少或者从来不在查询中出现的字段不要创建索引或者很少使用索引应该该删除掉。
-
+```
 # 索引的类型
 
 # 并发构建索引
@@ -25,6 +28,7 @@
 
 
 # 不阻塞创建索引
+```
 通常在postgresql创建普通索引如下
 
 create index idx_table_name_x1 on table_name(col_name);
@@ -34,7 +38,7 @@ create index idx_table_name_x1 on table_name(col_name);
 所以应该使用 concurrently 参数：
 
 create index concurrently idx_table_name_x1 on table_name(col_name);
-
+```
 
 
 https://blog.csdn.net/jubaoquan/article/details/78850899
