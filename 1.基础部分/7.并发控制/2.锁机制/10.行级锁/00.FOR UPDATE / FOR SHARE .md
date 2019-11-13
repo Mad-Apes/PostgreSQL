@@ -1,9 +1,0 @@
-# FOR UPDATE
-```
-
-```
-
-# FOR SHARE
-```
-
-```
