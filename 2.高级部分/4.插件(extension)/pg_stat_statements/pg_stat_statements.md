@@ -57,28 +57,23 @@ pg_stat_statements.max(integer)
        pg_stat_statements.max是最大追踪的统计数据数量(即，视图中的最大行数)。如果数据量大于最大值，那么执行最少的语句将会被丢弃(本人测试，如果语句执行次数都为1时，其次是时间久的数据被丢弃)，这个值默认是1000，这个变量在服务启动前设置。
 
  
-
 pg_stat_statements.track(enum)
 
         pg_stat_statements.track控制统计数据规则，top用于追踪top-level statement(直接由客户端方发送的)，all还会追踪嵌套的statements(例如在函数中调用的statements)
 
- 
 
 pg_stat_statements.track_utility(boolen)
 
        pg_stat_statements.track_utility控制是否跟踪公共程序命令(utility commands)，公共程序命令是SELECT/INSERT/UPDATE/DELETE以外的命令，默认值是开启，只有超级用户可以更改此设置。
 
- 
 
 pg_stat_statements.save(boolean)
 
        pg_stat_statements.save指定在服务器关闭时，是否保存统计信息。如果设置off，服务关闭时，统计信息将不会保存。默认值是on。这个值只能够在postgresql.conf中或者命令行设置。
 
- 
 
 该模块需要额外的共享内存，内存大小大致为pg_stat_statements.max* track_activity_query_size。要注意的是，一旦模块被加载，即使pg_stat_statements.track设置为none，共享内存都会被消耗。
 
- 
 
 上面的都是一些需要掌握的知识，下面开始真正配置pg_stat_statements并且运行
 
