@@ -1,4 +1,4 @@
-1 概述
+# 1 概述
 所有的参数的名称都是不区分大小写的。每个参数的取值是布尔型、整型、浮点型和字符串型这四种类型中的一个，分别用boolean、integer、floating point和string表示。布尔型的值可以写成ON、OFF、 TRUE、 FALSE、 YES、 NO、 1和 0，而且不区分大小写。
 
 有些参数用来配置内存大小和时间值。内存大小的单位可以是KB、MB和GB。时间的单位可以是毫秒、秒、分钟、小时和天。用ms表示毫秒，用s表示秒，用min表示分钟，用h表示小时，用d表示天。表示内存大小和时间值的参数都有一个默认的单位，如果用户在设置参数的值时没有指定单位，则以参数默认的单位为准。例如，参数shared_buffers表示数据缓冲区的大小，它的默认单位是数据块的个数，如果把它的值设成8，因为每个数据块的大小是8KB，则数据缓冲区的大小是8*8=64KB，如果将它的值设成128MB，则数据缓冲区的大小是128MB。参数vacuum_cost_delay的默认单位是毫秒，如果把它的值设成10，则它的值是10毫秒，如果把它的值设成100s，则它的值是100秒。
@@ -24,9 +24,9 @@ SET ENABLE_SEQSCAN TO OFF;
 （1）show all; --查看所有数据库参数的值
 （2）show search_path; --查看参数search_path的值
 
-2 参数详细说明
-2.1. 连接与认证
-2.1.1 连接设置
+# 2 参数详细说明
+## 2.1. 连接与认证
+### 2.1.1 连接设置
 listen_addresses (string)
 这个参数只有在启动数据库时，才能被设置。它指定数据库用来监听客户端连接的TCP/IP地址。默认是值是* ，表示数据库在启动以后将在运行数据的机器上的所有的IP地址上监听用户请求（如果机器只有一个网卡，只有一个IP地址，有多个网卡的机器有多个 IP地址）。可以写成机器的名字，也可以写成IP地址，不同的值用逗号分开，例如，’server01’, ’140.87.171.49, 140.87.171.21’。如果被设成localhost，表示数据库只能接受本地的客户端连接请求，不能接受远程的客户端连接请求。
 
@@ -55,7 +55,7 @@ tcp_keepalives_count (integer)
 这个参数可以在任何时候被设置。默认值是0，意思是使用操作系统的默认值。它设置TCP套接字的TCP_KEEPCNT属性。这个参数对于通过Unix-domain socket建立的数据库连接没有任何影响。
 
 
-2.1.2 安全与认证
+### 2.1.2 安全与认证
 authentication_timeout (integer)
 这个参数只能在postgresql.conf文件中被设置，它指定一个时间长度，在这个时间长度内，必须完成客户端认证操作，否则客户端连接请求将被拒绝。它可以阻止某些客户端进行认证时长时间占用数据库连接。单位是秒，默认值是60。
 
@@ -65,8 +65,8 @@ ssl (boolean)
 ssl_ciphers (string)
 指定可以使用的SSL加密算法。查看操作系统关于openssl的用户手册可以得到完整的加密算法列表（执行命令openssl ciphers –v也可以得到）。
 
-2.2 资源消耗
-2.2.1 内存
+## 2.2 资源消耗
+### 2.2.1 内存
 shared_buffers (integer)
 这个参数只有在启动数据库时，才能被设置。它表示数据缓冲区中的数据块的个数，每个数据块的大小是8KB。数据缓冲区位于数据库的共享内存中，它越大越好，不能小于128KB。默认值是1024。
 
@@ -85,7 +85,7 @@ maintenance_work_mem (integer)
 max_stack_depth (integer)
 这个参数可以在任何时候被设置，但只有数据库超级用户才能修改它。它决定一个数据库进程在运行时的STACK所占的空间的最大值。数据库进程在运行时，会自动检查自己的STACK大小是否超过max_stack_depth，如果超过，会自动终止当前事务。这个值应该比操作系统设置的进程STACK的大小的上限小1MB。使用操作系统命令“ulimit –s“可以得到操作系统设置的进程STACK的最大值。单位是KB，默认值是100。
 
-2.2.2 Free Space Map
+### 2.2.2 Free Space Map
 数据库的所有可用空间信息都存放在一个叫free space map (FSM)的结构中，它记载数据文件中每个数据块的可用空间的大小。FSM中没有记录的数据块，即使有可用空间，也不会系统使用。系统如果需要新的物理存储空间，会首先在FSM中查找，如果FSM中没有一个数据页有足够的可用空间，系统就会自动扩展数据文件。所以，FSM如果太小，会导致系统频繁地扩展数据文件，浪费物理存储空间。命令VACUUM VERBOSE在执行结束以后，会提示当前的FSM设置是否满足需要，如果FSM的参数值太小，它会提示增大参数。
 
 FSM存放在数据库的共享内存中，由于物理内存的限制，FSM不可能跟踪数据库的所有的数据文件的所有数据块的可用空间信息，只能跟踪一部分数据块的可用空间信息。
@@ -96,14 +96,14 @@ max_fsm_relations (integer)
 max_fsm_pages (integer)
 这个参数只有在启动数据库时，才能被设置。它决定FSM中跟踪的数据块的个数的上限。initdb在创建数据库集群时会根据物理内存的大小决定它的值。每个数据块在fsm中占6个字节的存储空间。它的大小不能小于16 * max_fsm_relations。默认值是20000。
 
-2.2.3 内核资源
+### 2.2.3 内核资源
 max_files_per_process (integer)
 这个参数只有在启动数据库时，才能被设置。他设定每个数据库进程能够打开的文件的数目。默认值是1000。
 
 shared_preload_libraries (string)
 这个参数只有在启动数据库时，才能被设置。它设置数据库在启动时要加载的操作系统共享库文件。如果有多个库文件，名字用逗号分开。如果数据库在启动时未找到shared_preload_libraries指定的某个库文件，数据库将无法启动。默认值为空串。
 
-2.2.4 垃圾收集
+### 2.2.4 垃圾收集
 执行VACUUM 和ANALYZE命令时，因为它们会消耗大量的CPU与IO资源，而且执行一次要花很长时间，这样会干扰系统执行应用程序发出的SQL命令。为了解决这个问题，VACUUM 和ANALYZE命令执行一段时间后，系统会暂时终止它们的运行，过一段时间后再继续执行这两个命令。这个特性在默认的情况下是关闭的。将参数vacuum_cost_delay设为一个非零的正整数就可以打开这个特性。
 
 用户通常只需要设置参数vacuum_cost_delay和vacuum_cost_limit，其它的参数使用默认值即可。VACUUM 和ANALYZE命令在执行过程中，系统会计算它们执行消耗的资源，资源的数量用一个正整数表示，如果资源的数量超过vacuum_cost_limit，则执行命令的进程会进入睡眠状态，睡眠的时间长度是是vacuum_cost_delay。vacuum_cost_limit的值越大，VACUUM 和ANALYZE命令在执行的过程中，睡眠的次数就越少，反之，vacuum_cost_limit的值越小，VACUUM 和ANALYZE命令在执行的过程中，睡眠的次数就越多。
@@ -123,7 +123,7 @@ vacuum_cost_page_dirty (integer)
 vacuum_cost_limit (integer)
 这个参数可以在任何时候被设置。默认值是200。
 
-2.2.5 后台写数据库进程
+### 2.2.5 后台写数据库进程
 后台写数据库进程负责将数据缓冲区中的被修改的数据块（又叫脏数据块）写回到数据库物理文件中。
 
 bgwriter_delay (integer)
@@ -135,7 +135,7 @@ bgwriter_lru_maxpages (integer)
 bgwriter_lru_multiplier (floating point)
 这个参数只能在文件postgresql.conf中设置。默认值是2.0。它决定后台写数据库进程每次写物理文件时，写到外部文件中的脏数据块的个数（不能超过bgwriter_lru_maxpages指定的值）。一般使用默认值即可，不需要修改这个参数。这个参数的值越大，后台写数据库进程每次写的脏数据块的个数就越多。
 
-2.3 事务日志
+## 2.3 事务日志
 full_page_writes (boolean)
 这个参数只能在postgresql.conf文件中被设置。默认值是on。打开这个参数，可以提高数据库的可靠性，减少数据丢失的概率，但是会产生过多的事务日志，降低数据库的性能。
 
@@ -151,7 +151,7 @@ commit_delay (integer)
 commit_siblings (integer)
 这个参数可以在任何时候被设置。这个参数的值决定参数commit_delay是否生效。假设commit_siblings的值是5，如果一个事务发出一个提交请求，此时，如果数据库中正在执行的事务的个数大于或等于5，那么该事务将睡眠commit_delay指定的时间。如果数据库中正在执行的事务的个数小于5，这个事务将直接提交。默认值是5。
 
-2.4 检查点
+## 2.4 检查点
 checkpoint_segments (integer)
 这个参数只能在postgresql.conf文件中被设置。默认值是3。它影响系统何时启动一个检查点操作。如果上次检查点操作结束以后，系统产生的事务日志文件的个数超过checkpoint_segments的值，系统就会自动启动一个检查点操作。增大这个参数会增加数据库崩溃以后恢复操作需要的时间。
 
@@ -161,7 +161,7 @@ checkpoint_timeout (integer)
 checkpoint_completion_target (floating point)
 这个参数控制检查点操作的执行时间。合法的取值在0到1之间，默认值是0.5。不要轻易地改变这个参数的值，使用默认值即可。 这个参数只能在postgresql.conf文件中被设置。
 
-2.5 归档模式
+## 2.5 归档模式
 archive_mode (boolean)
 这个参数只有在启动数据库时，才能被设置。默认值是off。它决定数据库是否打开归档模式。
 
@@ -171,8 +171,8 @@ archive_dir (string)
 archive_timeout (integer)
 这个参数只能在postgresql.conf文件中被设置。默认值是0。单位是秒。如果archive_timeout的值不是0，而且当前时间减去数据库上次进行事务日志文件切换的时间大于archive_timeout的值，数据库将进行一次事务日志文件切换。一般情况下，数据库只有在一个事务日志文件写满以后，才会切换到下一个事务日志文件，设定这个参数可以让数据库在一个事务日志文件尚未写满的情况下切换到下一个事务日志文件。
 
-2.6 优化器参数
-2.6.1 存取方法参数
+## 2.6 优化器参数
+### 2.6.1 存取方法参数
 下列参数控制查询优化器是否使用特定的存取方法。除非对优化器特别了解，一般情况下，使用它们默认值即可。
 
 enable_bitmapscan (boolean)
@@ -202,7 +202,7 @@ enable_sort (boolean)
 enable_tidscan (boolean)
 打开或者关闭TID scan。默认值是 on。
 
-2.6.2 优化器成本常量
+### 2.6.2 优化器成本常量
 优化器用一个正的浮点数来表示不同的查询计划的执行成本，每个基本的数据库操作都会被赋给一个确定的成本常量，优化器根据每个基本操作的执行成本来计算每个查询计划的执行成本。不要轻易地改变下面的参数的值，使用它们的默认值即可。
 
 seq_page_cost (floating point)
@@ -223,7 +223,7 @@ cpu_operator_cost (floating point)
 effective_cache_size (integer)
 设置单个查询可以使用的数据缓冲区的大小。默认值是128MB。
 
-2.6.3 Genetic Query Optimizer
+### 2.6.3 Genetic Query Optimizer
 下列参数控制优化器使用的遗传算法。除非对遗传算法特别了解，一般情况下，使用它们默认值即可。
 
 geqo (boolean)
@@ -244,14 +244,14 @@ geqo_generations (integer)
 geqo_selection_bias (floating point)
 控制遗传优化器的代选择偏差(selection bias)的大小。默认值是2。取值范围在1.50到2.00之间。
 
-2.6.4 其它优化器参数
+### 2.6.4 其它优化器参数
 default_statistics_target (integer)
 设置默认的收集优化器统计数据的目标值。它的值越大，ANALYZE操作的执行的时间越长，扫描的数据行的个数也就越多，得到的优化器统计数据就越准确。也可以使用命令ALTER TABLE ... ALTER COLUMN ... SET STATISTICS来为表的每个列设置一个单独的统计数据目标值，这个值的作用与参数default_statistics_target是一样，它只影响相关的列的统计数据收集过程。默认值是10。
 
 constraint_exclusion (boolean)
 如果该参数的值是on，查询优化器将使用表上的约束条件来优化查询。如果它的值是off，查询优化器不会使用表上的约束条件来优化查询。默认值是off。
 
-2.7 数据库运行日志配置参数
+## 2.7 数据库运行日志配置参数
 log_directory (string)
 这个参数只能在postgresql.conf文件中被设置。它决定存放数据库运行日志文件的目录。默认值是pg_log。可以是绝对路径，也可是相对路径（相对于数据库文件所在的路径）。
 
@@ -423,7 +423,7 @@ log_temp_files (integer)
 log_timezone (string)
 设置数据库日志文件在写日志文件时使用的时区。默认值是unknown，意识是使用操作系统的时区。这个参数只能在postgresql.conf文件中被设置。
 
-2.8 数据库运行统计数据相关参数
+## 2.8 数据库运行统计数据相关参数
 下面的参数控制是否搜集特定的数据库运行统计数据：
 
 track_activities (boolean)
@@ -438,7 +438,7 @@ log_planner_stats (boolean)
 log_executor_stats (boolean)
 这些参数决定是否在数据库的运行日志里记载每个SQL语句执行的统计数据。如果log_statement_stats的值是on，其它的三个参数的值必须是off。所有的这些参数的默认值都是off。log_statement_stats报告整个语句的统计数据，log_parser_stats记载数据库解析器的统计数据，log_planner_stats报告数据库查询优化器的统计数据，log_executor_stats报告数据库执行器的统计数据。只有超级用户才能修改这些参数。
 
-2.9 自动垃圾收集相关参数
+## 2.9 自动垃圾收集相关参数
 下面的参数控制自动垃圾收集的行为：
 
 autovacuum (boolean)
@@ -465,7 +465,7 @@ autovacuum_vacuum_scale_factor (floating point)
 autovacuum_analyze_scale_factor (floating point)
 这个参数与何时对一个表进行ANALYZE操作相关。默认值是0.1。这个参数只能在文件postgresql.conf中被设置。
 
-2.10 锁管理参数
+## 2.10 锁管理参数
 deadlock_timeout(integer)
 
 设置死锁超时检测时间。单位是微秒，默认值是1000。死锁检测是一个消耗许多 CPU资源的操作。这个参数的值不能太小。在数据库负载比较大的情况下，应当增大这个参数的值。
@@ -473,7 +473,7 @@ deadlock_timeout(integer)
 max_locks_per_transaction(integer)
 这个参数控制每个事务能够得到的平均的对象锁的个数。默认值是64。数据库在启动以后创建的共享锁表的最大可以保存max_locks_per_transaction * (max_connections + max_prepared_transactions)个对象锁。单个事务可以同时获得的对象锁的数目可以超过max_locks_per_transaction的值，只要共享锁表中还有剩余空间。
 
-2.11 系统预设参数
+## 2.11 系统预设参数
 这些参数系统启动后会自动设置，用户只能查询它们的值，不能用任何方式修改这些参数。
 
 block_size (integer)
@@ -518,7 +518,7 @@ hba_file (string)
 external_pid_file (string)
 数据库PID文件名。
 
-2.12 其它参数
+## 2.12 其它参数
 default_with_oids (boolean)
 该参数控制CREATE TABLE 和CREATE TABLE AS命令是否给新建的表添加一个系统列OID。如果它的值是on，CREATE TABLE 和CREATE TABLE AS命令在没有指定WITH OIDS 和WITHOUT OIDS子句的情况下，新建的表将包含系统列OID，同时SELECT INTO命令也会将系统列OID添加到新建的表中去。默认值是off。
 
@@ -598,8 +598,3 @@ standard_conforming_strings (boolean)
 
 synchronize_seqscans (boolean)
 如果这个参数的值是是on，多个查询如果同时顺序扫描一个表中的同一个数据页，系统只会发出一个IO操作来读取这个数据页，读出来的数据被多个查询共享，减少不必要的 IO操作，提高系统执行的效率，但是不带 ORDER BY子句的查询产生的结果中数据行的顺序可能会发生改变。如果值为off，这个特性将被关闭。默认值是on。
----------------------
-作者：prettyshuang
-来源：CSDN
-原文：https://blog.csdn.net/prettyshuang/article/details/50495347
-版权声明：本文为博主原创文章，转载请附上博文链接！
